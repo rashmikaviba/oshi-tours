@@ -1,0 +1,211 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+/* ═══════════════════════════════════════════════════════════
+   OSHĪ — Global Design System
+   Luxury Sri Lanka Travel Agency
+   Color palette · Typography · Scrollbar · Selection · Grain
+   ═══════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ── Color Palette ── */
+  --color-green: #3B5937;
+  --color-beige: #D3D6BB;
+  --color-white: #FFFFFF;
+
+  /* ── Green Opacity Tints ── */
+  --color-green-8: rgb(59 89 55 / 0.08);
+  --color-green-40: rgb(59 89 55 / 0.40);
+  --color-green-70: rgb(59 89 55 / 0.70);
+  --color-green-90: rgb(59 89 55 / 0.90);
+
+  /* ── White Opacity Tints ── */
+  --color-white-60: rgb(255 255 255 / 0.60);
+  --color-white-80: rgb(255 255 255 / 0.80);
+
+  /* ── Beige Opacity Tints ── */
+  --color-beige-60: rgb(211 214 187 / 0.60);
+  --color-beige-80: rgb(211 214 187 / 0.80);
+
+  /* ── Deep Shadow (no pure black) ── */
+  --color-shadow: rgb(20 32 18 / 0.85);
+
+  /* ── Font Families (set by next/font/local in layout) ── */
+  --font-grandslang: var(--font-grandslang-roman);
+  --font-newsreader: var(--font-newsreader-var);
+  /* Aliases to ensure backward compatibility with hardcoded classes */
+  --font-ogg: var(--font-newsreader-var);
+  --font-ogg-regular: var(--font-newsreader-var);
+
+  /* ── Premium Easing Curves ── */
+  --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-quart-out: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-quart-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-smooth: cubic-bezier(0.45, 0, 0.15, 1);
+}
+
+/* ── Base Reset ── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: auto; /* Lenis handles smooth scroll */
+  }
+
+  body {
+    font-family: var(--font-newsreader), "Ogg", 'Georgia', 'Times New Roman', serif;
+    background-color: var(--color-green);
+    color: var(--color-white);
+    overflow-x: hidden;
+    line-height: 1.5;
+    font-weight: 500;
+    letter-spacing: 0.015em;
+  }
+
+  /* ── Typography Hierarchy ── */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-grandslang), 'Georgia', serif;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── Custom Scrollbar ── */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-green);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-beige-60);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-beige-80);
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-beige-60) var(--color-green);
+  }
+
+  /* ── Text Selection ── */
+  ::selection {
+    background-color: var(--color-green-40);
+    color: var(--color-white);
+  }
+
+  ::-moz-selection {
+    background-color: var(--color-green-40);
+    color: var(--color-white);
+  }
+
+  /* ── Focus States (Accessibility) ── */
+  :focus-visible {
+    outline: 2px solid var(--color-beige);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Utility Classes
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Eyebrow Label ── */
+.eyebrow {
+  font-family: var(--font-newsreader), serif;
+  font-size: clamp(0.625rem, 0.55rem + 0.25vw, 0.8rem);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+/* ── Display Heading ── */
+.display-heading {
+  font-family: var(--font-grandslang), serif;
+  font-size: clamp(2.2rem, 1.5rem + 4.5vw, 6.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  font-weight: 400;
+}
+
+/* ── Body Serif ── */
+.body-serif {
+  font-family: var(--font-newsreader), serif;
+  font-size: clamp(0.875rem, 0.8rem + 0.35vw, 1.15rem);
+  line-height: 1.55;
+  font-weight: 500;
+  letter-spacing: 0.015em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Film Grain Overlay (applies via ::after on the hero)
+   ═══════════════════════════════════════════════════════════ */
+
+.film-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  opacity: 0.035;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Google Translate Clean Overrides
+   ═══════════════════════════════════════════════════════════ */
+
+.goog-te-banner-frame, 
+.skiptranslate:not(#google_translate_element), 
+#goog-gt-tt, 
+.goog-te-balloon-frame {
+  display: none !important;
+}
+
+body {
+  top: 0px !important;
+}
+
+.goog-text-highlight {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Reduced Motion — Accessibility
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .film-grain::after {
+    display: none;
+  }
+}
