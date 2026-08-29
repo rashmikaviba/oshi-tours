@@ -1,75 +1,47 @@
 # ==============================================================================
-# BASE STAGE: Shared configuration and dependency definition
+# BUILD STAGE: Installs dependencies and builds Next.js production bundle
 # ==============================================================================
-FROM node:20-alpine AS base
+FROM node:20-alpine AS build
 
-# Set working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copy package files
+# Copy package lock and package json
 COPY package*.json ./
 
-# ==============================================================================
-# DEVELOPMENT STAGE: Installs all dependencies and mounts code
-# ==============================================================================
-FROM base AS development
-
-# Install all dependencies (including devDependencies)
+# Install dependencies using clean install for reproducibility
 RUN npm install
 
-# Copy source code
+# Copy the rest of the application files
 COPY . .
 
-# Expose Next.js dev port
-EXPOSE 3000
+# Declare build arguments for environment variables
+ARG NEXT_PUBLIC_API_URL
+ARG NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+ARG NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
 
-# Start Next.js development server
-CMD ["npm", "run", "dev"]
-
-# ==============================================================================
-# BUILD STAGE: Builds production Next.js application
-# ==============================================================================
-FROM base AS build
-
-# Install all dependencies required for Next.js build
-RUN npm install
-
-# Copy source files
-COPY . .
-
-# Disable Next.js telemetry during build
+# Expose them as environment variables during build time
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+ENV NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=$NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Build Next.js application
+# Build the production bundle
 RUN npm run build
 
 # ==============================================================================
-# PRODUCTION RUNTIME STAGE: Minimal image for high security and performance
+# PRODUCTION STAGE: Nginx web server for high performance and static serving
 # ==============================================================================
-FROM node:20-alpine AS production
+FROM nginx:stable-alpine AS production
 
-WORKDIR /usr/src/app
+# Copy built static files and assets from build stage to Nginx web root
+COPY --from=build /app/public /usr/share/nginx/html
+COPY --from=build /app/.next /usr/share/nginx/html/.next
 
-# Copy built application assets, node_modules, and package files from build stage
-COPY --from=build /usr/src/app/package*.json ./
-COPY --from=build /usr/src/app/node_modules ./node_modules
-COPY --from=build /usr/src/app/.next ./.next
-COPY --from=build /usr/src/app/public ./public
+# Copy custom Nginx config for client-side routing fallback and caching
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Create required runtime cache directories with non-privileged user permissions
-RUN mkdir -p /usr/src/app/.next/cache \
-    && chown -R node:node /usr/src/app
+# Expose HTTP port 80
+EXPOSE 80
 
-# Run container under non-privileged system user for security
-USER node
-
-# Default environment configuration
-ENV NODE_ENV=production
-ENV PORT=3000
-ENV NEXT_TELEMETRY_DISABLED=1
-
-# Expose Next.js production port
-EXPOSE 3000
-
-# Start production Next.js server
-CMD ["npm", "run", "start"]
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]
