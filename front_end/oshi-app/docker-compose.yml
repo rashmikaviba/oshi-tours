@@ -1,0 +1,11 @@
+services:
+  web:
+    image: oshi-frontend-service:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./server_data/env_files/.env # Load environment variables from the external .env file

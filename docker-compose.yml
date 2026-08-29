@@ -1,0 +1,24 @@
+services:
+  backend:
+    image: oshi-backend-service:1.0.0
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend/server_data/uploads:/usr/src/app/uploads
+    env_file:
+      - ./backend/server_data/env_files/.env
+
+  frontend:
+    image: oshi-frontend-service:1.0.0
+    build:
+      context: ./front_end/oshi-app
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend

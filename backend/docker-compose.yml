@@ -1,0 +1,13 @@
+services:
+  api:
+    image: oshi-backend-service:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server_data/uploads:/usr/src/app/uploads # Bind-mount uploads directory to persist uploaded files locally
+    env_file:
+      - ./server_data/env_files/.env # Load environment variables from the external .env file
