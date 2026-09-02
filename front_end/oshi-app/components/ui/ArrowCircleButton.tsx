@@ -38,9 +38,9 @@ export default function ArrowCircleButton({
         relative flex items-center justify-center
         ${circleDimensions} rounded-full
         bg-[rgb(20,32,18)] text-[var(--color-white)]
-        shadow-[0_8px_24px_var(--color-shadow)]
+        shadow-none
         transition-all duration-500 ease-[var(--ease-expo-out)]
-        group-hover:scale-105 group-hover:bg-[var(--color-green)] group-hover:shadow-[0_12px_32px_rgb(20_32_18_/_0.95)]
+        group-hover:scale-105 group-hover:bg-[var(--color-green)] group-hover:shadow-none
         focus-visible:outline-2 focus-visible:outline-[var(--color-beige)] focus-visible:outline-offset-4
         select-none flex-shrink-0
         ${className}
