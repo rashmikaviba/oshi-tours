@@ -154,9 +154,17 @@ export default function VideoRevealSection({
     >
       {/* ── FULL SCREEN MEDIA CONTAINER (100vw edge-to-edge, no max-width, no side padding, uncropped object-contain) ── */}
       <div className="relative w-full max-w-none aspect-[16/9] flex items-center justify-center bg-transparent overflow-hidden">
-        {/* ── TOP & BOTTOM EDGE GRADIENT FADES (Responsive height scaling smoothly from mobile phones to large desktops) ── */}
+        {/* ── TOP & BOTTOM EDGE GRADIENT FADES ── */}
+        {/* Mobile top edge overlay: soft, short (32px), subtle fade so the leopard image stays visible */}
         <div
-          className="absolute top-0 left-0 right-0 pointer-events-none z-10"
+          className="block md:hidden absolute top-0 left-0 right-0 pointer-events-none z-10 h-8"
+          style={{
+            background: "linear-gradient(to bottom, rgba(211,214,187,0.65) 0%, rgba(211,214,187,0.2) 60%, rgba(211,214,187,0) 100%)",
+          }}
+        />
+        {/* Desktop top edge overlay: exact original deep gradient blend */}
+        <div
+          className="hidden md:block absolute top-0 left-0 right-0 pointer-events-none z-10"
           style={{
             height: "clamp(60px, 15vh, 240px)",
             background: "linear-gradient(to bottom, #D3D6BB 0%, #D3D6BB 15%, rgba(211,214,187,0.92) 35%, rgba(211,214,187,0.65) 65%, rgba(211,214,187,0) 100%)",

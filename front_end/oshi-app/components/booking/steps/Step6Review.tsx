@@ -45,6 +45,12 @@ export default function Step6Review({ data, prev, submit, isSubmitting, error }:
             <SummaryRow label="Departure" value={`${data.departureDate} @ ${data.departureTime} (${data.departureFlightNumber})`} />
           </div>
         )}
+
+        {data.customActivity && (
+          <div className="pt-4 mt-2">
+            <SummaryRow label="Custom Activity / Special Interest" value={data.customActivity} />
+          </div>
+        )}
       </div>
 
       {error && (
@@ -57,14 +63,14 @@ export default function Step6Review({ data, prev, submit, isSubmitting, error }:
         <button
           onClick={prev}
           disabled={isSubmitting}
-          className="px-8 py-4 border border-[var(--color-green)]/30 text-[var(--color-green)] font-mono text-xs tracking-widest uppercase hover:bg-[var(--color-green)]/5 transition-colors disabled:opacity-50"
+          className="px-8 py-4 rounded-full border border-[var(--color-green)]/30 text-[var(--color-green)] font-mono text-xs tracking-widest uppercase hover:bg-[var(--color-green)]/5 transition-all duration-300 disabled:opacity-50 cursor-pointer"
         >
           Back
         </button>
         <button
           onClick={submit}
           disabled={isSubmitting}
-          className="px-8 py-4 bg-[var(--color-green)] text-[var(--color-beige)] font-mono text-xs tracking-widest uppercase hover:bg-opacity-90 transition-opacity flex items-center gap-2 disabled:opacity-70"
+          className="px-8 py-4 rounded-full bg-[var(--color-green)] text-[var(--color-beige)] font-mono text-xs tracking-widest uppercase hover:bg-opacity-90 transition-all duration-300 flex items-center gap-2 disabled:opacity-70 cursor-pointer shadow-md"
         >
           {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
           {isSubmitting ? "Submitting..." : "Submit Request"}

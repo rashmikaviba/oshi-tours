@@ -32,6 +32,7 @@ export interface BookingFormData {
   medicalConditions: string;
   communicationPreference: string;
   specialRequests: string;
+  customActivity?: string; // Optional field for additional custom activity or special interest
 }
 
 export const INITIAL_FORM_DATA: BookingFormData = {
@@ -63,4 +64,5 @@ export const INITIAL_FORM_DATA: BookingFormData = {
   medicalConditions: '',
   communicationPreference: 'Email',
   specialRequests: '',
+  customActivity: '',
 };

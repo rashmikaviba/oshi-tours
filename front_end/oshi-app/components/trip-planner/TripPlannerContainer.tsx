@@ -94,20 +94,35 @@ export default function TripPlannerContainer() {
     });
   };
 
-  // Add Place to Day
+  // Add Place to Day (Enforcing max 3 places per day limit)
   const handleAddPlace = useCallback((dateString: string, place: PlaceItem) => {
-    setFormData((prev) => ({
-      ...prev,
-      itinerary: prev.itinerary.map((day) => {
-        if (day.dateString === dateString) {
-          return {
-            ...day,
-            places: [...day.places, place],
-          };
-        }
-        return day;
-      }),
-    }));
+    let limitReached = false;
+    setFormData((prev) => {
+      const targetDay = prev.itinerary.find((day) => day.dateString === dateString);
+      if (targetDay && targetDay.places.length >= 3) {
+        limitReached = true;
+        return prev;
+      }
+
+      return {
+        ...prev,
+        itinerary: prev.itinerary.map((day) => {
+          if (day.dateString === dateString) {
+            return {
+              ...day,
+              places: [...day.places, place],
+            };
+          }
+          return day;
+        }),
+      };
+    });
+
+    if (limitReached) {
+      alert("Maximum 3 places allowed per day. Please remove an existing place before adding another.");
+      return;
+    }
+
     setSelectedPlaceId(place.id);
   }, []);
 

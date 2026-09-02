@@ -64,7 +64,7 @@ export default function HeroReveal({ progress }: HeroRevealProps) {
           {/* Primary CTA */}
           <motion.a
             href="#journey"
-            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-[var(--color-beige)] text-[var(--color-green)] overflow-hidden transition-colors duration-500"
+            className="group relative inline-flex items-center justify-center gap-3 w-full sm:w-64 h-14 rounded-full bg-[var(--color-beige)] text-[var(--color-green)] overflow-hidden transition-colors duration-500 shadow-md"
             style={
               prefersReducedMotion
                 ? { opacity: ctaOpacity }
@@ -73,7 +73,7 @@ export default function HeroReveal({ progress }: HeroRevealProps) {
             aria-label="Begin Your Journey"
           >
             {/* Hover sweep fill */}
-            <span className="absolute inset-0 bg-[var(--color-white)] translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-500 ease-[var(--ease-expo-out)]" />
+            <span className="absolute inset-0 bg-[var(--color-white)] translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-500 ease-[var(--ease-expo-out)] rounded-full" />
             <span className="relative z-10 font-[family-name:var(--font-ogg)] text-sm tracking-[0.15em] uppercase font-medium">
               Begin Your Journey
             </span>
@@ -87,7 +87,7 @@ export default function HeroReveal({ progress }: HeroRevealProps) {
           {/* Secondary CTA */}
           <motion.a
             href="#experiences"
-            className="group inline-flex items-center gap-2 px-8 py-4 border border-[var(--color-white-60)] text-[var(--color-white)] hover:border-[var(--color-white)] hover:bg-[var(--color-white-60)]/10 transition-all duration-500"
+            className="group inline-flex items-center justify-center gap-2 w-full sm:w-64 h-14 rounded-full border border-[var(--color-white-60)] text-[var(--color-white)] hover:border-[var(--color-white)] hover:bg-[var(--color-white-60)]/10 transition-all duration-500"
             style={
               prefersReducedMotion
                 ? { opacity: cta2Opacity }

@@ -24,6 +24,13 @@ export default function TransportServiceDetails() {
       capacity: "Up to 2 Guests + 2 Suitcases"
     },
     {
+      pax: "1 – 4 Pax",
+      type: "SUV",
+      description: "Luxury 4x4 SUV (Toyota Land Cruiser / Prado) for all-terrain exploration and premium comfort.",
+      icon: Car,
+      capacity: "Up to 4 Guests + 3 Suitcases"
+    },
+    {
       pax: "3 – 6 Pax",
       type: "Mini Micro Van",
       description: "Standard choice for small groups and families, with ample space for luggage.",
@@ -103,7 +110,7 @@ export default function TransportServiceDetails() {
       </div>
 
       {/* ── Vehicle Fleet Cards Grid ── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
         {vehicleFleet.map((v, i) => {
           const IconComp = v.icon;
           return (

@@ -4,9 +4,9 @@ import { useMemo } from "react";
 import type { ExperienceData } from "@/data/experiences/hill-country-by-rail";
 
 /* ═══════════════════════════════════════════════════════════
-   SummaryCard — Sticky panel with live booking totals
+   SummaryCard — Sticky panel with live journey specifications
    Reads parent state (adults, children, selectedPackage,
-   selectedAddOns) and computes an estimated total.
+   selectedAddOns) and presents a luxury bespoke summary.
    ═══════════════════════════════════════════════════════════ */
 
 interface SummaryCardProps {
@@ -31,18 +31,6 @@ export default function SummaryCard({
     [experience.addOns, selectedAddOns]
   );
 
-  const packageSubtotal = pkg.price * adults;
-  const addOnSubtotal = activeAddOns.reduce((sum, a) => sum + a.price, 0);
-  const estimatedTotal = packageSubtotal + addOnSubtotal;
-
-  const formatUSD = (amount: number) =>
-    new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-
   return (
     <aside
       className="lg:sticky lg:top-24 bg-[var(--color-white)] rounded-3xl p-6 sm:p-8 shadow-xl border border-[var(--color-green)]/10"
@@ -50,7 +38,7 @@ export default function SummaryCard({
     >
       {/* ── Header ── */}
       <h3 className="font-[family-name:var(--font-grandslang)] text-xl text-[var(--color-green)]">
-        Booking Summary
+        Journey Summary
       </h3>
 
       <p className="font-[family-name:var(--font-ogg)] text-sm text-[var(--color-green-70)] mt-1">
@@ -60,69 +48,66 @@ export default function SummaryCard({
       {/* ── Divider ── */}
       <div className="border-t border-[var(--color-green)]/10 my-4" />
 
-      {/* ── Line items ── */}
+      {/* ── Specification Items ── */}
       <div className="space-y-3">
-        {/* Package */}
+        {/* Selected Tier / Package */}
         <div className="flex items-start justify-between gap-4">
           <div className="font-[family-name:var(--font-ogg)] text-sm text-[var(--color-green)]">
-            <span className="font-medium">{pkg.name}</span>
+            <span className="font-medium">Selected Tier: {pkg.name}</span>
             <span className="block text-xs text-[var(--color-green-70)] mt-0.5">
-              {formatUSD(pkg.price)} × {adults} {adults === 1 ? "adult" : "adults"}
+              Curated Private Circuit
             </span>
           </div>
-          <span className="font-[family-name:var(--font-ogg)] text-sm text-[var(--color-green)] whitespace-nowrap">
-            {formatUSD(packageSubtotal)}
-          </span>
         </div>
 
-        {/* Children note */}
-        {children > 0 && (
-          <div className="flex items-start justify-between gap-4">
-            <span className="font-[family-name:var(--font-ogg)] text-sm text-[var(--color-green)]">
-              Children
-              <span className="block text-xs text-[var(--color-green-70)] mt-0.5">
-                {children} {children === 1 ? "child" : "children"}
-              </span>
-            </span>
-            <span className="font-[family-name:var(--font-ogg)] text-xs text-[var(--color-green-70)] italic whitespace-nowrap">
-              Complimentary
-            </span>
+        {/* Travelers */}
+        <div className="flex items-start justify-between gap-4 pt-1">
+          <div className="font-[family-name:var(--font-ogg)] text-sm text-[var(--color-green)]">
+            <span className="text-xs uppercase tracking-wider text-[var(--color-green-70)] block">Travelers</span>
+            <span>{adults} {adults === 1 ? "Adult" : "Adults"} {children > 0 ? `· ${children} ${children === 1 ? "Child" : "Children"}` : ""}</span>
+          </div>
+        </div>
+
+        {/* Duration */}
+        <div className="flex items-start justify-between gap-4 pt-1">
+          <div className="font-[family-name:var(--font-ogg)] text-sm text-[var(--color-green)]">
+            <span className="text-xs uppercase tracking-wider text-[var(--color-green-70)] block">Duration</span>
+            <span>{experience.durationDays} Days / {experience.durationDays - 1} Nights</span>
+          </div>
+        </div>
+
+        {/* Selected Add-ons */}
+        {activeAddOns.length > 0 && (
+          <div className="pt-2 border-t border-[var(--color-green)]/10">
+            <span className="text-xs uppercase tracking-wider text-[var(--color-green-70)] block mb-1">Add-ons Included</span>
+            <ul className="space-y-1">
+              {activeAddOns.map((addOn) => (
+                <li key={addOn.id} className="font-[family-name:var(--font-ogg)] text-xs text-[var(--color-green)] flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-green)] shrink-0" />
+                  {addOn.label}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
-
-        {/* Add-ons */}
-        {activeAddOns.map((addOn) => (
-          <div
-            key={addOn.id}
-            className="flex items-start justify-between gap-4"
-          >
-            <span className="font-[family-name:var(--font-ogg)] text-sm text-[var(--color-green)]">
-              {addOn.label}
-            </span>
-            <span className="font-[family-name:var(--font-ogg)] text-sm text-[var(--color-green)] whitespace-nowrap">
-              +{formatUSD(addOn.price)}
-            </span>
-          </div>
-        ))}
       </div>
 
       {/* ── Divider ── */}
       <div className="border-t border-[var(--color-green)]/10 my-4" />
 
-      {/* ── Estimated Total ── */}
-      <div className="flex items-baseline justify-between gap-4">
-        <span className="font-[family-name:var(--font-ogg)] text-sm text-[var(--color-green-70)]">
-          Estimated Total
+      {/* ── Service Highlight ── */}
+      <div className="bg-[var(--color-green)]/5 p-4 rounded-xl border border-[var(--color-green)]/10">
+        <span className="font-[family-name:var(--font-ogg)] text-xs font-semibold text-[var(--color-green)] block uppercase tracking-wider mb-0.5">
+          Bespoke Chauffeur Service
         </span>
-        <span className="font-[family-name:var(--font-grandslang)] text-2xl sm:text-3xl text-[var(--color-green)]">
-          {formatUSD(estimatedTotal)}
+        <span className="font-[family-name:var(--font-ogg)] text-xs text-[var(--color-green-70)] block leading-relaxed">
+          Dedicated vehicle, matched driver, and 24/7 on-trip support included.
         </span>
       </div>
 
       {/* ── Footer note ── */}
-      <p className="font-[family-name:var(--font-ogg)] text-xs text-[var(--color-green-70)] italic mt-5 leading-relaxed">
-        This is an enquiry — our team will confirm availability and final
-        pricing within 24 hours.
+      <p className="font-[family-name:var(--font-ogg)] text-xs text-[var(--color-green-70)] italic mt-4 leading-relaxed">
+        This is an enquiry — our team will confirm availability and send a customized quote within 24 hours.
       </p>
     </aside>
   );

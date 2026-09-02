@@ -69,13 +69,13 @@ export default function Step4Transport({ data, update, next, prev }: Props) {
       <div className="flex justify-between mt-8">
         <button
           onClick={prev}
-          className="px-8 py-4 border border-[var(--color-green)]/30 text-[var(--color-green)] font-mono text-xs tracking-widest uppercase hover:bg-[var(--color-green)]/5 transition-colors"
+          className="px-8 py-4 rounded-full border border-[var(--color-green)]/30 text-[var(--color-green)] font-mono text-xs tracking-widest uppercase hover:bg-[var(--color-green)]/5 transition-all duration-300 cursor-pointer"
         >
           Back
         </button>
         <button
           onClick={handleNext}
-          className="px-8 py-4 bg-[var(--color-green)] text-[var(--color-beige)] font-mono text-xs tracking-widest uppercase hover:bg-opacity-90 transition-opacity"
+          className="px-8 py-4 rounded-full bg-[var(--color-green)] text-[var(--color-beige)] font-mono text-xs tracking-widest uppercase hover:bg-opacity-90 transition-all duration-300 cursor-pointer shadow-md"
         >
           Next Step
         </button>

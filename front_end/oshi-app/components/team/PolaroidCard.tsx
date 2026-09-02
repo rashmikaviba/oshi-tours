@@ -42,7 +42,7 @@ export default function PolaroidCard({
         damping: 22,
         mass: 0.8
       }}
-      className="relative flex flex-col bg-[var(--color-white)] p-3 sm:p-4 pb-8 sm:pb-12 border border-black/5 rounded-sm cursor-pointer origin-bottom w-[280px] sm:w-[320px] shrink-0"
+      className="relative flex flex-col bg-[var(--color-white)] p-3 sm:p-4 pb-8 sm:pb-12 border border-black/5 rounded-sm cursor-pointer origin-bottom w-[230px] sm:w-[280px] lg:w-[320px] shrink-0"
       style={{
         boxShadow: isHovered 
           ? "0 25px 50px -12px rgba(20, 32, 18, 0.25), 0 0 20px 0 rgba(0,0,0,0.05)" 

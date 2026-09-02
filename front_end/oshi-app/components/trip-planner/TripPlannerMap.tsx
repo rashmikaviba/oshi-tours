@@ -25,6 +25,7 @@ export default function TripPlannerMap({
   onMarkerSelectPlace,
   selectedPlaceId,
 }: Props) {
+  const mapWrapperRef = useRef<HTMLDivElement>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
 
   // Google Maps Refs
@@ -45,6 +46,24 @@ export default function TripPlannerMap({
     }
   }, [itinerary, selectedDayDate]);
 
+  // Prevent outer page scrolling when mouse wheel is scrolled over the map container
+  useEffect(() => {
+    const container = mapWrapperRef.current;
+    if (!container) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+      e.stopPropagation();
+    };
+
+    container.addEventListener("wheel", handleWheel, { passive: false });
+    return () => {
+      container.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
+
   // 1. Initialize Google Maps
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -63,7 +82,7 @@ export default function TripPlannerMap({
           mapTypeControl: false,
           streetViewControl: false,
           fullscreenControl: true,
-          // Requirement 2: Direct mouse scroll wheel zoom without requiring Ctrl
+          // Requirement: Direct mouse scroll wheel zoom without requiring Ctrl/keys
           gestureHandling: "greedy",
         };
 
@@ -237,7 +256,7 @@ export default function TripPlannerMap({
     };
   }, [mapEngine, activePinDate, onPinAddPlace]);
 
-  // Requirement 5: In-Map Direct Search Place Handler
+  // Requirement: In-Map Direct Search Place Handler
   const handleInMapSearchSelect = useCallback(
     (place: PlaceItem) => {
       const targetDate = activePinDate || selectedDayDate || itinerary[0]?.dateString;
@@ -328,8 +347,8 @@ export default function TripPlannerMap({
   });
 
   return (
-    <div className="relative w-full h-full min-h-[400px] bg-[var(--color-beige)] flex flex-col">
-      {/* ── REQUIREMENT 5: IN-MAP FLOATING SEARCH BAR OVERLAY ── */}
+    <div ref={mapWrapperRef} className="relative w-full h-full min-h-[400px] bg-[var(--color-beige)] flex flex-col">
+      {/* ── IN-MAP FLOATING SEARCH BAR OVERLAY ── */}
       <div className="absolute top-4 left-4 right-4 z-[400] max-w-md mx-auto">
         <div className="bg-[var(--color-white)]/90 backdrop-blur-md p-2 rounded-2xl border border-[var(--color-green)]/20 shadow-xl flex items-center gap-2">
           <div className="flex-1">

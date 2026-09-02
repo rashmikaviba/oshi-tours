@@ -31,7 +31,9 @@ export default function Step5Additional({ data, update, next, prev }: Props) {
 
       <div className="space-y-8 mb-8">
         <div>
-          <label className="block text-sm font-mono tracking-wider opacity-70 mb-2 uppercase">Activities of Interest</label>
+          <label className="block text-sm font-mono tracking-wider opacity-70 mb-2 uppercase">
+            Activities of Interest
+          </label>
           <textarea
             value={data.activitiesOfInterest}
             onChange={(e) => update({ activitiesOfInterest: e.target.value })}
@@ -40,8 +42,26 @@ export default function Step5Additional({ data, update, next, prev }: Props) {
           />
         </div>
 
+        {/* Optional Custom Activity / Special Interest Field */}
         <div>
-          <label className="block text-sm font-mono tracking-wider opacity-70 mb-2 uppercase">Medical Conditions / Dietary Requirements</label>
+          <label className="block text-sm font-mono tracking-wider opacity-70 mb-2 uppercase">
+            Additional Custom Activity or Special Interest (Optional)
+          </label>
+          <textarea
+            value={data.customActivity || ""}
+            onChange={(e) => update({ customActivity: e.target.value })}
+            className="w-full bg-transparent border-b border-[var(--color-green)]/30 py-3 focus:outline-none focus:border-[var(--color-green)] transition-colors font-[family-name:var(--font-newsreader)] text-lg placeholder-[var(--color-green)]/30 resize-none min-h-[80px]"
+            placeholder="e.g. Traditional Ceylon pottery workshop, private photography trek, hot air ballooning over Sigiriya..."
+          />
+          <p className="text-xs text-[var(--color-green)]/60 font-mono mt-1">
+            Specify any unique activity or personal interest you wish to experience beyond our listed options. You can leave this blank.
+          </p>
+        </div>
+
+        <div>
+          <label className="block text-sm font-mono tracking-wider opacity-70 mb-2 uppercase">
+            Medical Conditions / Dietary Requirements
+          </label>
           <textarea
             value={data.medicalConditions}
             onChange={(e) => update({ medicalConditions: e.target.value })}
@@ -51,7 +71,9 @@ export default function Step5Additional({ data, update, next, prev }: Props) {
         </div>
 
         <div>
-          <label className="block text-sm font-mono tracking-wider opacity-70 mb-2 uppercase">Special Requests</label>
+          <label className="block text-sm font-mono tracking-wider opacity-70 mb-2 uppercase">
+            Special Requests
+          </label>
           <textarea
             value={data.specialRequests}
             onChange={(e) => update({ specialRequests: e.target.value })}
@@ -61,7 +83,9 @@ export default function Step5Additional({ data, update, next, prev }: Props) {
         </div>
 
         <div>
-          <label className="block text-sm font-mono tracking-wider opacity-70 mb-4 uppercase">Preferred Communication Method</label>
+          <label className="block text-sm font-mono tracking-wider opacity-70 mb-4 uppercase">
+            Preferred Communication Method <span className="text-red-600">*</span>
+          </label>
           <div className="flex gap-6">
             {['Email', 'Phone', 'WhatsApp'].map(method => (
               <label key={method} className="flex items-center gap-2 cursor-pointer font-[family-name:var(--font-newsreader)] text-lg">
@@ -70,7 +94,10 @@ export default function Step5Additional({ data, update, next, prev }: Props) {
                   name="commPreference"
                   value={method}
                   checked={data.communicationPreference === method}
-                  onChange={(e) => update({ communicationPreference: e.target.value })}
+                  onChange={(e) => {
+                    update({ communicationPreference: e.target.value });
+                    if (errors.communicationPreference) setErrors({});
+                  }}
                   className="w-4 h-4 accent-[var(--color-green)]"
                 />
                 {method}
@@ -84,13 +111,13 @@ export default function Step5Additional({ data, update, next, prev }: Props) {
       <div className="flex justify-between mt-8">
         <button
           onClick={prev}
-          className="px-8 py-4 border border-[var(--color-green)]/30 text-[var(--color-green)] font-mono text-xs tracking-widest uppercase hover:bg-[var(--color-green)]/5 transition-colors"
+          className="px-8 py-4 rounded-full border border-[var(--color-green)]/30 text-[var(--color-green)] font-mono text-xs tracking-widest uppercase hover:bg-[var(--color-green)]/5 transition-all duration-300 cursor-pointer"
         >
           Back
         </button>
         <button
           onClick={handleNext}
-          className="px-8 py-4 bg-[var(--color-green)] text-[var(--color-beige)] font-mono text-xs tracking-widest uppercase hover:bg-opacity-90 transition-opacity"
+          className="px-8 py-4 rounded-full bg-[var(--color-green)] text-[var(--color-beige)] font-mono text-xs tracking-widest uppercase hover:bg-opacity-90 transition-all duration-300 cursor-pointer shadow-md"
         >
           Review Details
         </button>

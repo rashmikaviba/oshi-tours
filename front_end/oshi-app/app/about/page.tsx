@@ -192,13 +192,13 @@ export default function AboutPage() {
           <p className="font-[family-name:var(--font-newsreader-var)] text-base sm:text-lg text-[var(--color-green)]/80 max-w-xl mx-auto">
             Use our interactive Trip Planner or speak directly with our private travel designers to start crafting your journey.
           </p>
-          <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
-            <PillButton href="/trip-planner" showArrow={true}>
+          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <PillButton href="/trip-planner" showArrow={true} className="w-full sm:w-64 h-14">
               Plan Your Custom Journey
             </PillButton>
             <Link
               href="/#experiences"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border border-[var(--color-green)]/30 text-[var(--color-green)] font-[family-name:var(--font-newsreader-var)] text-sm tracking-wide hover:bg-[var(--color-green)] hover:text-white transition-all duration-300 font-medium"
+              className="inline-flex items-center justify-center gap-2 w-full sm:w-64 h-14 rounded-full border border-[var(--color-green)]/30 text-[var(--color-green)] font-[family-name:var(--font-newsreader-var)] text-sm tracking-wide hover:bg-[var(--color-green)] hover:text-white transition-all duration-300 font-medium"
             >
               Explore Curated Routes
             </Link>

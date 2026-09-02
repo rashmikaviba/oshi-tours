@@ -171,10 +171,10 @@ export default function Step1Basics({ data, update, next }: Props) {
         <button
           type="button"
           onClick={handleNext}
-          className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--color-green)] text-[var(--color-beige)] rounded-full font-mono text-xs tracking-widest uppercase hover:bg-opacity-90 transition-all shadow-sm"
+          className="inline-flex items-center gap-2 px-5 py-3 sm:px-8 sm:py-4 bg-[var(--color-green)] text-[var(--color-beige)] rounded-full font-mono text-[11px] sm:text-xs tracking-widest uppercase hover:bg-opacity-90 transition-all shadow-sm"
         >
           <span>Continue to Personal Details</span>
-          <ArrowRight className="w-4 h-4" />
+          <ArrowRight className="w-4 h-4 shrink-0" />
         </button>
       </div>
     </div>

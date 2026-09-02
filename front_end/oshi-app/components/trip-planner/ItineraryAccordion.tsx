@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ItineraryDay, PlaceItem, formatShortRange } from "@/types/tripPlanner";
 import PlaceSearchInput from "./PlaceSearchInput";
 import PlaceCard from "./PlaceCard";
-import { ChevronDown, ChevronUp, MapPin, Calendar, Plus } from "lucide-react";
+import { ChevronDown, ChevronUp, MapPin, Calendar, Plus, AlertCircle } from "lucide-react";
 
 interface Props {
   itinerary: ItineraryDay[];
@@ -70,7 +70,7 @@ export default function ItineraryAccordion({
             Itinerary Route
           </h3>
           <p className="text-xs text-[var(--color-green-70)] font-mono uppercase tracking-wider">
-            {itinerary.length} {itinerary.length === 1 ? 'Day' : 'Days'} Total
+            {itinerary.length} {itinerary.length === 1 ? 'Day' : 'Days'} Total &middot; Min 1, Max 3 places per day
           </p>
         </div>
 
@@ -88,6 +88,8 @@ export default function ItineraryAccordion({
           const isExpanded = expandedDates[day.dateString] ?? (dayIdx === 0);
           const isPinningActive = activePinDate === day.dateString;
           const placeCount = day.places.length;
+          const isFull = placeCount >= 3;
+          const isEmpty = placeCount === 0;
 
           return (
             <div
@@ -111,11 +113,16 @@ export default function ItineraryAccordion({
                     <h4 className="font-[family-name:var(--font-grandslang)] text-lg text-[var(--color-green)]">
                       {day.displayDate}
                     </h4>
-                    <div className="flex items-center gap-2 text-xs text-[var(--color-green-70)] mt-0.5">
-                      <span>{placeCount} {placeCount === 1 ? 'place' : 'places'}</span>
-                      {placeCount === 0 && (
-                        <span className="text-amber-700/70 font-mono text-[10px] uppercase">
-                          • Empty day
+                    <div className="flex items-center gap-2 text-xs text-[var(--color-green-70)] mt-0.5 font-mono">
+                      <span>{placeCount}/3 places</span>
+                      {isEmpty && (
+                        <span className="text-red-600/90 font-mono text-[11px] font-semibold flex items-center gap-1">
+                          &bull; 1 place required
+                        </span>
+                      )}
+                      {isFull && (
+                        <span className="text-emerald-700 font-mono text-[11px] font-semibold">
+                          &bull; Max limit reached
                         </span>
                       )}
                     </div>
@@ -140,28 +147,38 @@ export default function ItineraryAccordion({
               {/* Expanded Body */}
               {isExpanded && (
                 <div className="px-4 pb-5 pt-2 border-t border-[var(--color-green)]/10 space-y-4">
-                  {/* Action Bar: Search Input & Add Pin Toggle */}
-                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                    <div className="flex-1">
-                      <PlaceSearchInput
-                        onPlaceSelect={(place) => onAddPlace(day.dateString, place)}
-                        placeholder={`Add place to ${day.displayDate.split(',')[0]}...`}
-                      />
+                  {/* Limit Banner or Action Search Input Bar */}
+                  {isFull ? (
+                    <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-600/20 text-amber-900 text-xs font-mono flex items-center justify-between">
+                      <span className="flex items-center gap-1.5 font-semibold">
+                        <AlertCircle className="w-4 h-4 text-amber-700 shrink-0" />
+                        <span>Maximum 3 places reached for this day (3/3).</span>
+                      </span>
+                      <span className="text-[11px] opacity-80">Remove a place to add another</span>
                     </div>
+                  ) : (
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                      <div className="flex-1">
+                        <PlaceSearchInput
+                          onPlaceSelect={(place) => onAddPlace(day.dateString, place)}
+                          placeholder={`Add place to ${day.displayDate.split(',')[0]} (${placeCount + 1}/3)...`}
+                        />
+                      </div>
 
-                    <button
-                      type="button"
-                      onClick={() => onTogglePinMode(day.dateString)}
-                      className={`inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl text-xs font-mono tracking-wider uppercase transition-all duration-300 shrink-0 ${
-                        isPinningActive
-                          ? "bg-[var(--color-green)] text-[var(--color-beige)] ring-2 ring-[var(--color-green)]/30 font-semibold"
-                          : "bg-[var(--color-green)]/10 text-[var(--color-green)] hover:bg-[var(--color-green)]/20"
-                      }`}
-                    >
-                      <MapPin className="w-4 h-4" />
-                      <span>{isPinningActive ? "Pinning Active" : "Add Pin"}</span>
-                    </button>
-                  </div>
+                      <button
+                        type="button"
+                        onClick={() => onTogglePinMode(day.dateString)}
+                        className={`inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl text-xs font-mono tracking-wider uppercase transition-all duration-300 shrink-0 ${
+                          isPinningActive
+                            ? "bg-[var(--color-green)] text-[var(--color-beige)] ring-2 ring-[var(--color-green)]/30 font-semibold"
+                            : "bg-[var(--color-green)]/10 text-[var(--color-green)] hover:bg-[var(--color-green)]/20"
+                        }`}
+                      >
+                        <MapPin className="w-4 h-4" />
+                        <span>{isPinningActive ? "Pinning Active" : "Add Pin"}</span>
+                      </button>
+                    </div>
+                  )}
 
                   {/* Added Places List */}
                   {placeCount > 0 ? (
@@ -178,11 +195,11 @@ export default function ItineraryAccordion({
                       ))}
                     </div>
                   ) : (
-                    <div className="p-6 rounded-xl border border-dashed border-[var(--color-green)]/20 bg-[var(--color-beige)]/30 text-center">
-                      <p className="font-[family-name:var(--font-ogg)] text-sm text-[var(--color-green-70)] italic mb-2">
-                        No places added for this day yet.
+                    <div className="p-6 rounded-xl border border-dashed border-red-400/40 bg-red-500/5 text-center">
+                      <p className="font-[family-name:var(--font-ogg)] text-sm text-red-700 italic mb-2 font-medium">
+                        At least 1 place must be added for this day.
                       </p>
-                      <p className="text-xs text-[var(--color-green-70)]">
+                      <p className="text-xs text-[var(--color-green-70)] font-mono">
                         Use the search input above or click <span className="font-semibold text-[var(--color-green)]">"Add Pin"</span> to drop a marker on the map.
                       </p>
                     </div>

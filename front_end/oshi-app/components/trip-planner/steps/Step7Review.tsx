@@ -19,6 +19,14 @@ export default function Step7Review({ data, goToStep, prev }: Props) {
   const handleSubmit = async () => {
     if (!consent) return;
 
+    // Check if any day has 0 places
+    const emptyDays = data.itinerary.filter((day) => day.places.length === 0);
+    if (emptyDays.length > 0) {
+      const dayNames = emptyDays.map((d) => d.displayDate.split(",")[0]).join(", ");
+      setErrorMessage(`Cannot submit trip plan: every day must have at least 1 place selected. Please edit step 4 to add destinations for: ${dayNames}.`);
+      return;
+    }
+
     setIsSubmitting(true);
     setErrorMessage(null);
 
@@ -304,6 +312,11 @@ export default function Step7Review({ data, goToStep, prev }: Props) {
               )}
             </div>
 
+            {data.customActivity && (
+              <p className="text-xs text-[var(--color-green-70)] mt-1 truncate">
+                Custom Activity: <strong className="text-[var(--color-green)]">{data.customActivity}</strong>
+              </p>
+            )}
             {data.medicalConditions && (
               <p className="text-xs text-[var(--color-green-70)] mt-1 truncate">
                 Medical/Diet: <strong className="text-[var(--color-green)]">{data.medicalConditions}</strong>
@@ -337,9 +350,9 @@ export default function Step7Review({ data, goToStep, prev }: Props) {
           type="button"
           onClick={prev}
           disabled={isSubmitting}
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[var(--color-green)]/30 text-[var(--color-green)] font-mono text-xs tracking-widest uppercase hover:bg-[var(--color-green)]/5 transition-colors disabled:opacity-50"
+          className="inline-flex items-center gap-1.5 px-5 py-3 sm:px-6 sm:py-3.5 rounded-full border border-[var(--color-green)]/30 text-[var(--color-green)] font-mono text-[11px] sm:text-xs tracking-widest uppercase hover:bg-[var(--color-green)]/5 transition-colors shrink-0 disabled:opacity-50"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4 shrink-0" />
           <span>Back</span>
         </button>
 
@@ -347,7 +360,7 @@ export default function Step7Review({ data, goToStep, prev }: Props) {
           type="button"
           onClick={handleSubmit}
           disabled={!consent || isSubmitting}
-          className="inline-flex items-center gap-2 px-10 py-4 bg-[var(--color-green)] text-[var(--color-beige)] rounded-full font-mono text-xs tracking-widest uppercase hover:bg-opacity-90 transition-all shadow-md disabled:opacity-40 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-1.5 px-5 py-3 sm:px-10 sm:py-4 bg-[var(--color-green)] text-[var(--color-beige)] rounded-full font-mono text-[11px] sm:text-xs tracking-widest uppercase hover:bg-opacity-90 transition-all shadow-md disabled:opacity-40 disabled:cursor-not-allowed"
         >
           {isSubmitting ? (
             <>

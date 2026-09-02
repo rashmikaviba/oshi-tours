@@ -6,7 +6,7 @@ import type { ExperienceData } from "@/data/experiences/hill-country-by-rail";
    QuickFacts — Compact stat cards for the booking hero strip
    ───────────────────────────────────────────────────────────
    Renders a responsive grid of 4 glassmorphic cards showing
-   Duration, Location, Group Size, and starting price.
+   Duration, Location, Group Size, and Travel Style.
    ═══════════════════════════════════════════════════════════ */
 
 interface QuickFactsProps {
@@ -64,7 +64,7 @@ const icons = {
       <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
     </svg>
   ),
-  tag: (
+  compass: (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
@@ -76,8 +76,8 @@ const icons = {
       className="mb-2 h-5 w-5 text-[var(--color-white)]/70"
       aria-hidden="true"
     >
-      <path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42Z" />
-      <circle cx="7.5" cy="7.5" r=".5" fill="currentColor" />
+      <circle cx="12" cy="12" r="10" />
+      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
     </svg>
   ),
 } as const;
@@ -106,9 +106,9 @@ function buildFacts(experience: ExperienceData): Fact[] {
       value: experience.groupSize,
     },
     {
-      icon: icons.tag,
-      label: "From",
-      value: `${experience.currency} ${experience.priceFrom.toLocaleString()}`,
+      icon: icons.compass,
+      label: "Travel Style",
+      value: "Private Chauffeur Tour",
     },
   ];
 }

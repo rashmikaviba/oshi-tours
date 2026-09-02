@@ -11,7 +11,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Scattered angles for the cards on desktop (we repeat the pattern if there are more cards)
+// Scattered angles for the cards across all screen sizes
 const CARD_ROTATIONS = [-5, 3, -2, 4, -4, 2];
 
 export default function TeamPolaroids() {
@@ -20,14 +20,6 @@ export default function TeamPolaroids() {
   const textRef = useRef<HTMLDivElement>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const prefersReducedMotion = useReducedMotion();
-  const [isMobile, setIsMobile] = useState(true); // default true for SSR
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 1024);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
 
   useEffect(() => {
     if (prefersReducedMotion || !sectionRef.current) return;
@@ -83,35 +75,34 @@ export default function TeamPolaroids() {
     <section
       ref={sectionRef}
       className="relative z-10 w-full bg-transparent px-0 lg:px-20 pt-8 sm:pt-12 lg:pt-16 pb-4 sm:pb-6 lg:pb-8 overflow-hidden"
-      aria-label="The team behind your journey"
+      aria-label="Handcrafted Ceylon Experiences"
     >
       {/* ── Heading ── */}
       <div ref={textRef} className="text-center max-w-2xl mx-auto mb-16 sm:mb-20 px-6 sm:px-10">
         <h2 className="font-[family-name:var(--font-grandslang)] text-[clamp(2rem,4vw,3.5rem)] leading-[1.05] text-[var(--color-green)] mb-6">
-          The people behind your journey
+          Unforgettable Ceylon Moments
         </h2>
         <p className="body-serif text-[var(--color-green-70)] text-base sm:text-lg">
-          A small team of Sri Lanka specialists who design every trip by hand.
+          Snapshots of private safaris, ancient citadels, and serene coastal escapes curated by our specialists.
         </p>
       </div>
 
-      {/* ── Polaroid Cluster ── */}
+      {/* ── Overlapping Polaroid Cluster (Mobile & Desktop) ── */}
       <div className="w-full relative">
         <div 
           ref={clusterRef}
-          className="flex flex-row overflow-x-auto lg:overflow-visible items-center lg:justify-center gap-8 lg:gap-0 px-6 sm:px-10 lg:px-0 pb-4 pt-6 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden"
+          className="flex flex-row overflow-x-auto lg:overflow-visible items-center justify-start lg:justify-center gap-0 px-6 sm:px-10 lg:px-0 pb-8 pt-6 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {team.map((member, i) => {
-            // No rotation on mobile/tablet to keep carousel clean
-            const rotation = isMobile ? 0 : (CARD_ROTATIONS[i % CARD_ROTATIONS.length]);
+            const rotation = CARD_ROTATIONS[i % CARD_ROTATIONS.length];
             
             return (
               <div 
                 key={member.id} 
-                className={`snap-center lg:snap-align-none transition-opacity duration-300 ${
-                  !isMobile && hoveredId && hoveredId !== member.id ? 'opacity-60' : 'opacity-100'
-                } ${!isMobile && i !== 0 ? '-ml-6 xl:-ml-10' : ''}`}
+                className={`snap-center shrink-0 transition-opacity duration-300 ${
+                  hoveredId && hoveredId !== member.id ? 'opacity-60' : 'opacity-100'
+                } ${i !== 0 ? '-ml-10 sm:-ml-10 xl:-ml-12' : ''}`}
               >
                 <PolaroidCard
                   member={member}

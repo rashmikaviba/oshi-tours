@@ -86,6 +86,7 @@ export interface TripPlannerFormData {
   medicalConditions: string;
   communicationPreference: string;
   specialRequests: string;
+  customActivity?: string; // Optional field for additional custom activity or special interest
 }
 
 export const INITIAL_TRIP_PLANNER_DATA: TripPlannerFormData = {
@@ -116,6 +117,7 @@ export const INITIAL_TRIP_PLANNER_DATA: TripPlannerFormData = {
   medicalConditions: '',
   communicationPreference: 'Email',
   specialRequests: '',
+  customActivity: '',
 };
 
 // Curated Sri Lanka Landmark Summaries and Image Fallbacks

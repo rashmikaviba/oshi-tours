@@ -70,7 +70,7 @@ function CompassIcon({ className }: { className?: string }) {
   );
 }
 
-function TagIcon({ className }: { className?: string }) {
+function ShieldCheckIcon({ className }: { className?: string }) {
   return (
     <svg
       className={className}
@@ -84,27 +84,8 @@ function TagIcon({ className }: { className?: string }) {
       strokeLinejoin="round"
       aria-hidden="true"
     >
-      <path d="M12 2H2v10l9.29 9.29a1 1 0 0 0 1.42 0l6.58-6.58a1 1 0 0 0 0-1.42L12 2Z" />
-      <path d="M7 7h.01" />
-    </svg>
-  );
-}
-
-function CheckIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M20 6 9 17l-5-5" />
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
+      <path d="m9 12 2 2 4-4" />
     </svg>
   );
 }
@@ -135,10 +116,9 @@ const facts: FactRow[] = [
     getValue: (exp) => exp.region,
   },
   {
-    icon: TagIcon,
-    label: "From Price",
-    getValue: (exp) =>
-      `${exp.currency} ${exp.priceFrom.toLocaleString("en-US")}`,
+    icon: ShieldCheckIcon,
+    label: "Service Included",
+    getValue: () => "Private Vehicle & Dedicated Driver",
   },
 ];
 
@@ -256,8 +236,6 @@ export default function Overview({ experience }: OverviewProps) {
           >
             {experience.overview}
           </p>
-
-
         </div>
       </div>
     </section>
