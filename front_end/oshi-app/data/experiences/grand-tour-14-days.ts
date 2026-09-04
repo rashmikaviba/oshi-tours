@@ -82,8 +82,8 @@ const grandTour14Days: ExperienceData = {
       day: 2,
       title: "Sigiriya Rock Fortress Climb, Village Tour & Evening Safari",
       description: "A full day exploring Sigiriya: the climb of the rock fortress in the morning, a traditional village tour in the afternoon, and a wildlife safari at dusk.",
-      images: ["/media/Sigiriya/i_2.jpeg", "/media/Sigiriya/i_1.jpeg", "/media/Sigiriya/i_3.jpeg"],
-      cityImage: "/media/Sigiriya/i_2.jpeg",
+      images: ["/media/Sigiriya/i_4.jpg", "/media/Sigiriya/i_5.jpg", "/media/Sigiriya/i_6.jpg"],
+      cityImage: "/media/Sigiriya/i_4.jpg",
       categoryImage: "/media/activities/culture-heritage.jpeg",
       historicalNote: "Sigiriya's 5th-century rock fortress and palace, built for King Kashyapa, is a UNESCO World Heritage Site (1982), famed for its frescoes, Mirror Wall and sophisticated ancient water-garden engineering.",
       primaryExcursions: [
@@ -341,8 +341,8 @@ const grandTour14Days: ExperienceData = {
       day: 8,
       title: "Transfer to Yala – Wildlife Safari",
       description: "Travel to Yala National Park for a jeep safari in search of its famously dense leopard population and abundant wildlife.",
-      images: ["/media/Yala/i_1.jpeg", "/media/Yala/i_2.jpeg", "/media/Yala/i_3.jpeg"],
-      cityImage: "/media/Yala/i_1.jpeg",
+      images: ["/media/wilpattu/i_1.jpg", "/media/wilpattu/i_2.jpg", "/media/wilpattu/i_3.jpg"],
+      cityImage: "/media/wilpattu/i_1.jpg",
       categoryImage: "/media/activities/wildlife-safari.jpeg",
       historicalNote: "Yala National Park is Sri Lanka's most visited national park and holds one of the highest recorded densities of leopards anywhere in the world.",
       primaryExcursions: [
@@ -446,8 +446,8 @@ const grandTour14Days: ExperienceData = {
       day: 11,
       title: "Mirissa Whale Watching",
       description: "An early-morning boat excursion in search of blue whales, sperm whales and dolphins, with the rest of the day free at the beach.",
-      images: ["/media/Mirissa/i_2.jpeg", "/media/Mirissa/i_1.jpeg", "/media/Mirissa/i_3.jpeg"],
-      cityImage: "/media/Mirissa/i_2.jpeg",
+      images: ["/media/Mirissa/i_4.jpg", "/media/Mirissa/i_5.jpg", "/media/Mirissa/i_6.jpg"],
+      cityImage: "/media/Mirissa/i_4.jpg",
       categoryImage: "/media/activities/beaches-coastal-experiences.jpeg",
       historicalNote: "Waters off Mirissa form a major migratory corridor for blue whales, the largest animal on Earth (Nov–Apr), alongside sperm whales and spinner dolphins.",
       primaryExcursions: [
@@ -606,8 +606,8 @@ const grandTour14Days: ExperienceData = {
       day: 15,
       title: "Departure",
       description: "After breakfast, transfer to Bandaranaike International Airport for your onward flight.",
-      images: ["/media/Colombo/i_2.jpeg", "/media/Colombo/i_1.jpeg", "/media/Negombo/i_1.jpeg"],
-      cityImage: "/media/Colombo/i_2.jpeg",
+      images: ["/media/departure/i_1.jpg", "/media/departure/i_2.jpg", "/media/departure/i_3.jpg"],
+      cityImage: "/media/departure/i_1.jpg",
       categoryImage: "/media/activities/beaches-coastal-experiences.jpeg",
       historicalNote: "Direct highway transfer from Colombo to Bandaranaike Airport.",
       primaryExcursions: [

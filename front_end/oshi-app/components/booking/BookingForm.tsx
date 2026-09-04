@@ -150,8 +150,8 @@ export default function BookingForm({ experienceName }: { experienceName?: strin
 
             <div className="pt-6 border-t border-[var(--color-green)]/10">
               <p className="text-sm font-mono tracking-widest uppercase opacity-70 mb-2">Need Assistance?</p>
-              <a href="mailto:concierge@oshi.com" className="font-[family-name:var(--font-newsreader)] text-lg hover:opacity-70 transition-opacity">
-                concierge@oshi.com
+              <a href="mailto:oshitourslanka@gmail.com" className="font-[family-name:var(--font-newsreader)] text-lg hover:opacity-70 transition-opacity">
+                oshitourslanka@gmail.com
               </a>
             </div>
           </div>

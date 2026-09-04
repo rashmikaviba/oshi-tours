@@ -6,11 +6,11 @@ const ceylonCoastToHighlands: ExperienceData = {
   tagline: "Negombo to Galle via Hill Country & Yala — Culture, Hill Country, Wildlife & Coast",
   heroImage: "/media/hero_4.jpg",
   gallery: [
-    "/media/Negombo/i_1.jpeg",
+    "/media/Negombo/i_3.jpeg",
     "/media/Sigiriya/i_1.jpeg",
     "/media/Kandy/i_1.jpeg",
     "/media/Nuwara%20Eliya/i_1.jpeg",
-    "/media/Ella/I_1.jpeg",
+    "/media/Ella/I_3.jpeg",
     "/media/Galle/i_1.jpeg"
   ],
   location: "Negombo → Sigiriya → Kandy → Nuwara Eliya → Ella → Yala → Galle, Sri Lanka",
@@ -137,8 +137,8 @@ const ceylonCoastToHighlands: ExperienceData = {
       day: 3,
       title: "Sigiriya – Dambulla Cave Temple & Wildlife Safari",
       description: "A second day based in Sigiriya, with the option to explore the UNESCO-listed Dambulla Cave Temple and to head out on a wildlife safari in one of the nearby national parks.",
-      images: ["/media/Sigiriya/i_2.jpeg", "/media/Sigiriya/i_1.jpeg", "/media/Sigiriya/i_3.jpeg"],
-      cityImage: "/media/Sigiriya/i_2.jpeg",
+      images: ["/media/Dabulla/i_1.jpg", "/media/Dabulla/i_2.jpg", "/media/Dabulla/i_3.jpg"],
+      cityImage: "/media/Dabulla/i_1.jpg",
       categoryImage: "/media/activities/wildlife-safari.jpeg",
       historicalNote: "The Dambulla Cave Temple, a UNESCO World Heritage Site since 1991, has drawn pilgrims for over 2,000 years and houses 153 Buddha statues across five ornately painted cave shrines. Nearby Minneriya, Kaudulla and Hurulu Eco Park are seasonal stages for 'The Gathering' of wild Asian elephants.",
       primaryExcursions: [
@@ -370,7 +370,7 @@ const ceylonCoastToHighlands: ExperienceData = {
       day: 8,
       title: "Departure",
       description: "After breakfast, transfer from Galle to Bandaranaike International Airport (approx. 2 hours) for your departure flight.",
-      images: ["/media/Colombo/i_1.jpeg", "/media/Colombo/i_2.jpeg", "/media/Negombo/i_1.jpeg"],
+      images: ["/media/Colombo/i_1.jpeg", "/media/Colombo/i_2.jpeg", "/media/Colombo/i_3.jpeg"],
       cityImage: "/media/Colombo/i_1.jpeg",
       categoryImage: "/media/activities/beaches-coastal-experiences.jpeg",
       historicalNote: "Direct highway transfer via the Southern Expressway ensures smooth travel back to Colombo and Bandaranaike Airport.",

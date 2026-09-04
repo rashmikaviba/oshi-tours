@@ -24,7 +24,7 @@ const icons = {
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="mb-2 h-5 w-5 text-[var(--color-white)]/70"
+      className="mb-1 sm:mb-2 h-4 w-4 sm:h-5 sm:w-5 text-[var(--color-white)]/70"
       aria-hidden="true"
     >
       <rect x="3" y="4" width="18" height="18" rx="2" />
@@ -40,7 +40,7 @@ const icons = {
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="mb-2 h-5 w-5 text-[var(--color-white)]/70"
+      className="mb-1 sm:mb-2 h-4 w-4 sm:h-5 sm:w-5 text-[var(--color-white)]/70"
       aria-hidden="true"
     >
       <path d="M12 21c-4-4-8-7.33-8-11a8 8 0 1 1 16 0c0 3.67-4 7-8 11Z" />
@@ -56,12 +56,12 @@ const icons = {
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="mb-2 h-5 w-5 text-[var(--color-white)]/70"
+      className="mb-1 sm:mb-2 h-4 w-4 sm:h-5 sm:w-5 text-[var(--color-white)]/70"
       aria-hidden="true"
     >
       <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
       <circle cx="9" cy="7" r="4" />
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+      <path d="M22 21v-2a4 4 0 0 1 0 7.75" />
     </svg>
   ),
   compass: (
@@ -73,7 +73,7 @@ const icons = {
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="mb-2 h-5 w-5 text-[var(--color-white)]/70"
+      className="mb-1 sm:mb-2 h-4 w-4 sm:h-5 sm:w-5 text-[var(--color-white)]/70"
       aria-hidden="true"
     >
       <circle cx="12" cy="12" r="10" />
@@ -117,19 +117,19 @@ export default function QuickFacts({ experience }: QuickFactsProps) {
   const facts = buildFacts(experience);
 
   return (
-    <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+    <div className="grid grid-cols-2 gap-2 sm:gap-3 md:grid-cols-4 md:gap-4">
       {facts.map((fact) => (
         <div
           key={fact.label}
-          className="rounded-2xl border border-[var(--color-white)]/20 bg-[var(--color-white)]/10 px-5 py-4 backdrop-blur-md"
+          className="rounded-xl sm:rounded-2xl border border-[var(--color-white)]/20 bg-[var(--color-white)]/10 px-3 py-2.5 sm:px-5 sm:py-4 backdrop-blur-md"
         >
           {fact.icon}
 
-          <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-white)]/60">
+          <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] text-[var(--color-white)]/60">
             {fact.label}
           </p>
 
-          <p className="font-[family-name:var(--font-ogg)] text-sm font-light text-[var(--color-white)] sm:text-base">
+          <p className="font-[family-name:var(--font-ogg)] text-xs font-light text-[var(--color-white)] sm:text-base leading-tight mt-0.5 sm:mt-0">
             {fact.value}
           </p>
         </div>
