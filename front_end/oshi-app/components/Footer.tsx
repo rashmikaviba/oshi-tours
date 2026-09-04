@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { Mail, Phone, User, ArrowUpRight } from "lucide-react";
+import { handleEmailClick, GMAIL_COMPOSE_URL } from "@/lib/emailHelper";
 
 const WhatsAppIcon = ({ className }: { className?: string }) => (
   <svg
@@ -59,8 +60,11 @@ export default function Footer() {
                 <div>
                   <span className="text-[10px] font-mono text-[var(--color-beige)]/60 uppercase block">Email Inquiries</span>
                   <a 
-                    href="mailto:oshitourslanka@gmail.com" 
-                    className="hover:text-white hover:underline transition-colors font-mono text-xs sm:text-sm text-white"
+                    href={GMAIL_COMPOSE_URL} 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={handleEmailClick}
+                    className="hover:text-white hover:underline transition-colors font-mono text-xs sm:text-sm text-white cursor-pointer pointer-events-auto relative z-10"
                   >
                     oshitourslanka@gmail.com
                   </a>
@@ -116,7 +120,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#experiences" className="hover:text-[var(--color-white)] transition-colors">
+                <Link href="/#journeys" className="hover:text-[var(--color-white)] transition-colors">
                   Curated Experiences
                 </Link>
               </li>

@@ -7,7 +7,7 @@ const essentialCeylon9Days: ExperienceData = {
   heroImage: "/media/hero_1.jpg",
   gallery: [
     "/media/Sigiriya/i_1.jpeg",
-    "/media/Sigiriya/i_2.jpeg",
+    "/media/Sigiriya/i_3.jpeg",
     "/media/Kandy/i_1.jpeg",
     "/media/Kandy/i_2.jpeg",
     "/media/Colombo/i_1.jpeg",

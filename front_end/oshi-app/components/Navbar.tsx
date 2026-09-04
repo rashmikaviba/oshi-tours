@@ -17,10 +17,8 @@ interface NavbarProps {
 const NAV_LINKS = [
   { label: "Journeys", href: "/#journeys" },
   { label: "Trip Planner", href: "/trip-planner" },
-  { label: "Experiences", href: "/#experiences" },
-  { label: "Journal", href: "/blog" },
   { label: "About Us", href: "/about" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Blog", href: "/blog" },
 ];
 
 const navVariants = {
@@ -43,7 +41,7 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
     <AnimatePresence>
       {isVisible && (
         <motion.header
-          className="fixed top-0 left-0 right-0 z-50 px-6 md:px-10 lg:px-16 py-5 bg-[var(--color-green)]/80 backdrop-blur-md"
+          className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 md:px-8 lg:px-10 py-4 bg-[var(--color-green)]/80 backdrop-blur-md"
           variants={prefersReducedMotion ? undefined : navVariants}
           initial={prefersReducedMotion ? { opacity: 0 } : "hidden"}
           animate={prefersReducedMotion ? { opacity: 1 } : "visible"}
@@ -52,7 +50,7 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
           {/* Fully transparent background */}
 
           <nav
-            className="relative flex items-center justify-between max-w-[1440px] mx-auto"
+            className="relative flex items-center justify-between max-w-[1720px] mx-auto"
             role="navigation"
             aria-label="Main navigation"
           >
@@ -71,7 +69,9 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="font-[family-name:var(--font-newsreader-var)] text-[var(--color-white)]/90 text-sm tracking-[0.08em] hover:text-[var(--color-white)] transition-colors duration-300 relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-px after:bg-[var(--color-beige)] hover:after:w-full after:transition-all after:duration-500 after:ease-[var(--ease-expo-out)]"
+                  target={link.href.startsWith("http") ? "_blank" : undefined}
+                  rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="font-[family-name:var(--font-newsreader-var)] text-[var(--color-white)]/90 text-sm tracking-[0.08em] hover:text-[var(--color-white)] transition-colors duration-300 relative z-10 cursor-pointer pointer-events-auto after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-px after:bg-[var(--color-beige)] hover:after:w-full after:transition-all after:duration-500 after:ease-[var(--ease-expo-out)]"
                 >
                   {link.label}
                 </a>
@@ -133,6 +133,8 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
                     <a
                       key={link.label}
                       href={link.href}
+                      target={link.href.startsWith("http") ? "_blank" : undefined}
+                      rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
                       className="font-[family-name:var(--font-newsreader-var)] text-[var(--color-white)] text-lg tracking-[0.08em]"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >

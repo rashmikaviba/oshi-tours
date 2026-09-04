@@ -1,17 +1,13 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PillButton from "@/components/ui/PillButton";
 import { Mail, Phone, MessageCircle, ArrowUpRight, Compass, ShieldCheck, HeartHandshake, MapPin } from "lucide-react";
-
-export const metadata: Metadata = {
-  title: "About Us — OSHĪ Luxury Sri Lanka Travel",
-  description:
-    "Learn about OSHĪ, our founder Oshan Fernando, and our commitment to crafting unhurried, private, and design-led travel experiences across Sri Lanka.",
-};
+import { handleEmailClick, GMAIL_COMPOSE_URL } from "@/lib/emailHelper";
 
 const WhatsAppIcon = ({ className }: { className?: string }) => (
   <svg
@@ -93,8 +89,11 @@ export default function AboutPage() {
             {/* Direct Contact Buttons */}
             <div className="pt-4 flex flex-wrap items-center gap-4">
               <a
-                href="mailto:oshitourslanka@gmail.com"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[var(--color-green)] text-white text-xs font-mono tracking-wider hover:bg-[rgb(20,32,18)] transition-colors shadow-md"
+                href={GMAIL_COMPOSE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={handleEmailClick}
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[var(--color-green)] text-white text-xs font-mono tracking-wider hover:bg-[rgb(20,32,18)] transition-colors shadow-md cursor-pointer pointer-events-auto relative z-10"
               >
                 <Mail className="w-4 h-4 text-[var(--color-beige)]" />
                 <span>oshitourslanka@gmail.com</span>
@@ -197,7 +196,7 @@ export default function AboutPage() {
               Plan Your Custom Journey
             </PillButton>
             <Link
-              href="/#experiences"
+              href="/#journeys"
               className="inline-flex items-center justify-center gap-2 w-full sm:w-64 h-14 rounded-full border border-[var(--color-green)]/30 text-[var(--color-green)] font-[family-name:var(--font-newsreader-var)] text-sm tracking-wide hover:bg-[var(--color-green)] hover:text-white transition-all duration-300 font-medium"
             >
               Explore Curated Routes

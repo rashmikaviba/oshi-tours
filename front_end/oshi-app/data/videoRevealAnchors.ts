@@ -76,7 +76,7 @@ export const anchors: VideoRevealAnchor[] = [
     type: 'cta',
     text: "Track the wild →",
     subtext: "Private safaris · Yala · Wilpattu",
-    href: "#wildlife-journeys",
+    href: "/#journeys",
     staggerIndex: 2,
   },
 ];

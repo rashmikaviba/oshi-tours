@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { Mail } from "lucide-react";
+import { handleEmailClick, GMAIL_COMPOSE_URL } from "@/lib/emailHelper";
 
 const FacebookIcon = ({ className }: { className?: string }) => (
   <svg
@@ -70,7 +71,7 @@ export default function StickySocialBar() {
     {
       name: "Email",
       icon: Mail,
-      href: "mailto:oshitourslanka@gmail.com",
+      href: GMAIL_COMPOSE_URL,
       ariaLabel: "Email OSHĪ Tours",
     },
   ];
@@ -87,8 +88,9 @@ export default function StickySocialBar() {
             <a
               key={index}
               href={item.href}
-              target={item.href.startsWith("http") ? "_blank" : undefined}
-              rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={item.name === "Email" ? handleEmailClick : undefined}
               aria-label={item.ariaLabel}
               className="group relative w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-[var(--color-beige)]/80 hover:text-white hover:bg-white/20 hover:scale-110 transition-all duration-300 ease-[var(--ease-expo-out)] cursor-pointer"
             >

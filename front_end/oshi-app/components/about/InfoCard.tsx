@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import { handleEmailClick, GMAIL_COMPOSE_URL } from "@/lib/emailHelper";
 
 interface InfoCardProps {
   onContactClick?: () => void;
@@ -64,20 +64,24 @@ export default function InfoCard({ onContactClick }: InfoCardProps) {
       </div>
 
       {/* Bottom buttons row: Contact Us + small circular arrow button */}
-      <div className="flex items-center gap-3 w-full sm:w-auto pt-2 min-w-0">
-        <Link
-          href="#private-expeditions"
-          onClick={onContactClick}
-          className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:py-4 min-h-[44px] sm:min-h-[48px] rounded-full bg-[var(--color-green)] text-[var(--color-white)] font-[family-name:var(--font-ogg)] text-xs sm:text-sm tracking-widest uppercase font-medium hover:bg-[rgb(40_62_36)] shadow-md hover:shadow-lg transition-all duration-300 select-none pointer-events-auto shrink-0"
+      <div className="relative z-20 flex items-center gap-3 w-full sm:w-auto pt-2 min-w-0 pointer-events-auto">
+        <a
+          href={GMAIL_COMPOSE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={handleEmailClick}
+          className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:py-4 min-h-[44px] sm:min-h-[48px] rounded-full bg-[var(--color-green)] text-[var(--color-white)] font-[family-name:var(--font-ogg)] text-xs sm:text-sm tracking-widest uppercase font-medium hover:bg-[rgb(40_62_36)] shadow-md hover:shadow-lg transition-all duration-300 shrink-0 cursor-pointer pointer-events-auto relative z-10"
         >
           <span>Contact Us</span>
-        </Link>
+        </a>
 
-        <Link
-          href="#private-expeditions"
-          onClick={onContactClick}
-          aria-label="Contact Us inquiry form"
-          className="w-11 h-11 sm:w-12 sm:h-12 min-h-[44px] min-w-[44px] rounded-full bg-[var(--color-green)] text-[var(--color-white)] hover:bg-[rgb(40_62_36)] shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center shrink-0 select-none"
+        <a
+          href={GMAIL_COMPOSE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={handleEmailClick}
+          aria-label="Contact Us email compose window"
+          className="w-11 h-11 sm:w-12 sm:h-12 min-h-[44px] min-w-[44px] rounded-full bg-[var(--color-green)] text-[var(--color-white)] hover:bg-[rgb(40_62_36)] shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center shrink-0 cursor-pointer pointer-events-auto relative z-10"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +99,7 @@ export default function InfoCard({ onContactClick }: InfoCardProps) {
             <line x1="7" y1="17" x2="17" y2="7" />
             <polyline points="7 7 17 7 17 17" />
           </svg>
-        </Link>
+        </a>
       </div>
     </div>
   );

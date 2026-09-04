@@ -63,7 +63,7 @@ export default function HeroReveal({ progress }: HeroRevealProps) {
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 items-center justify-center pointer-events-auto">
           {/* Primary CTA */}
           <motion.a
-            href="#journey"
+            href="/trip-planner"
             className="group relative inline-flex items-center justify-center gap-3 w-full sm:w-64 h-14 rounded-full bg-[var(--color-beige)] text-[var(--color-green)] overflow-hidden transition-colors duration-500 shadow-md"
             style={
               prefersReducedMotion
@@ -86,7 +86,7 @@ export default function HeroReveal({ progress }: HeroRevealProps) {
 
           {/* Secondary CTA */}
           <motion.a
-            href="#experiences"
+            href="/#journeys"
             className="group inline-flex items-center justify-center gap-2 w-full sm:w-64 h-14 rounded-full border border-[var(--color-white-60)] text-[var(--color-white)] hover:border-[var(--color-white)] hover:bg-[var(--color-white-60)]/10 transition-all duration-500"
             style={
               prefersReducedMotion

@@ -75,7 +75,7 @@ export default function InspirationSection() {
   return (
     <section
       ref={sectionRef}
-      id="curated-journeys"
+      id="journeys"
       className="relative z-20 bg-transparent pt-6 sm:pt-8 lg:pt-9 xl:pt-10 pb-4 sm:pb-6 lg:pb-8 xl:pb-10 px-4 sm:px-8 lg:px-12 xl:px-16 overflow-hidden"
       aria-label="Curated travel journeys inspiration"
     >
@@ -100,7 +100,7 @@ export default function InspirationSection() {
           </div>
 
           <div className="flex-shrink-0 self-start sm:self-end sm:pb-1 mt-2 sm:mt-0">
-            <PillButton href="#all-journeys" ariaLabel="See all curated journeys">
+            <PillButton href="/#journeys" ariaLabel="See all curated journeys">
               See more journeys
             </PillButton>
           </div>

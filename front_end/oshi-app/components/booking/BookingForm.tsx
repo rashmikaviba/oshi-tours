@@ -11,6 +11,7 @@ import Step4Transport from "./steps/Step4Transport";
 import Step5Additional from "./steps/Step5Additional";
 import Step6Review from "./steps/Step6Review";
 import { CheckCircle } from "lucide-react";
+import { handleEmailClick, GMAIL_COMPOSE_URL } from "@/lib/emailHelper";
 
 const TOTAL_STEPS = 6;
 
@@ -150,7 +151,7 @@ export default function BookingForm({ experienceName }: { experienceName?: strin
 
             <div className="pt-6 border-t border-[var(--color-green)]/10">
               <p className="text-sm font-mono tracking-widest uppercase opacity-70 mb-2">Need Assistance?</p>
-              <a href="mailto:oshitourslanka@gmail.com" className="font-[family-name:var(--font-newsreader)] text-lg hover:opacity-70 transition-opacity">
+              <a href={GMAIL_COMPOSE_URL} target="_blank" rel="noopener noreferrer" onClick={handleEmailClick} className="font-[family-name:var(--font-newsreader)] text-lg hover:opacity-70 transition-opacity cursor-pointer pointer-events-auto relative z-10">
                 oshitourslanka@gmail.com
               </a>
             </div>

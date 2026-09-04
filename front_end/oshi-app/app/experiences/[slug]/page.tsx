@@ -4,6 +4,7 @@ import React from "react";
 import { useParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import PillButton from "@/components/ui/PillButton";
+import { handleEmailClick, GMAIL_COMPOSE_URL } from "@/lib/emailHelper";
 import Hero from "@/components/booking/Hero";
 import Overview from "@/components/booking/Overview";
 import Gallery from "@/components/booking/Gallery";
@@ -70,8 +71,11 @@ export default function ExperiencePage() {
                 Explore More Journeys
               </PillButton>
               <a
-                href="mailto:oshitourslanka@gmail.com"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[var(--color-green)]/30 text-[var(--color-green)] font-[family-name:var(--font-ogg)] text-sm tracking-wide hover:bg-[var(--color-green)] hover:text-[var(--color-white)] transition-all duration-300"
+                href={GMAIL_COMPOSE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={handleEmailClick}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[var(--color-green)]/30 text-[var(--color-green)] font-[family-name:var(--font-ogg)] text-sm tracking-wide hover:bg-[var(--color-green)] hover:text-[var(--color-white)] transition-all duration-300 cursor-pointer pointer-events-auto relative z-10"
               >
                 oshitourslanka@gmail.com
               </a>
