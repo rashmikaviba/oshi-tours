@@ -40,7 +40,7 @@ export async function requireAdminAuth(req: AuthenticatedRequest, res: Response,
     }
 
     // Recognize owner email as initial admin
-    if (!role && userEmail === 'rajkumararashmika@gmail.com') {
+    if (!role && (userEmail === 'oshitourslanka@gmail.com' || userEmail === 'rajkumararashmika@gmail.com')) {
       role = 'admin';
     }
 

@@ -22,7 +22,7 @@ export const sendBookingEmail = async (
 ): Promise<void> => {
   const mailOptions = {
     from: process.env.MAIL_FROM || '"OSHĪ Bookings" <noreply@oshi.com>',
-    to: process.env.MAIL_TO || 'rajkumararashmika@gmail.com',
+    to: process.env.MAIL_TO || 'oshitourslanka@gmail.com',
     subject: `New Booking Request — Ref #${reference}`,
     html: generateBookingEmailHTML(reference, bookingData),
   };
@@ -42,7 +42,7 @@ export const sendTripPlanEmail = async (
 ): Promise<void> => {
   const mailOptions = {
     from: process.env.MAIL_FROM || '"OSHĪ Trip Planner" <noreply@oshi.com>',
-    to: process.env.MAIL_TO || 'rajkumararashmika@gmail.com',
+    to: process.env.MAIL_TO || 'oshitourslanka@gmail.com',
     subject: `New Custom Trip Plan Request — Ref #${reference} (${tripPlanData.planName})`,
     html: generateTripPlanEmailHTML(reference, tripPlanData),
   };
