@@ -59,47 +59,47 @@ export default function HeroReveal({ progress }: HeroRevealProps) {
  and living heritage, crafted entirely around you.
  </motion.p>
 
- {/* ── CTAs ── */}
- <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 items-center justify-center pointer-events-auto">
- {/* Primary CTA */}
- <motion.a
- href="/trip-planner"
- className="group relative inline-flex items-center justify-center gap-3 w-full sm:w-64 h-14 rounded-full bg-[var(--color-beige)] text-[var(--color-green)] overflow-hidden transition-colors duration-500 shadow-md"
- style={
- prefersReducedMotion
- ? { opacity: ctaOpacity }
- : { opacity: ctaOpacity, y: ctaY }
- }
- aria-label="Begin Your Journey"
- >
- {/* Hover sweep fill */}
- <span className="absolute inset-0 bg-[var(--color-white)] translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-500 ease-[var(--ease-expo-out)] rounded-full" />
- <span className="relative z-10 font-[family-name:var(--font-ogg)] text-sm tracking-[0.15em] uppercase font-medium">
- Begin Your Journey
- </span>
- <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1">
- <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-current">
- <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
- </svg>
- </span>
- </motion.a>
+  {/* ── CTAs ── */}
+  <div className="flex flex-col sm:flex-row gap-3.5 sm:gap-5 items-center justify-center pointer-events-auto">
+    {/* Primary CTA */}
+    <motion.a
+      href="/trip-planner"
+      className="group relative inline-flex items-center justify-center gap-2.5 w-[82%] max-w-[250px] sm:w-64 h-11 sm:h-14 rounded-full bg-[var(--color-beige)] text-[var(--color-green)] overflow-hidden transition-colors duration-500 shadow-md"
+      style={
+        prefersReducedMotion
+          ? { opacity: ctaOpacity }
+          : { opacity: ctaOpacity, y: ctaY }
+      }
+      aria-label="Begin Your Journey"
+    >
+      {/* Hover sweep fill */}
+      <span className="absolute inset-0 bg-[var(--color-white)] translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-500 ease-[var(--ease-expo-out)] rounded-full" />
+      <span className="relative z-10 font-[family-name:var(--font-ogg)] text-xs sm:text-sm tracking-[0.12em] sm:tracking-[0.15em] uppercase font-medium">
+        Begin Your Journey
+      </span>
+      <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-current">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </span>
+    </motion.a>
 
- {/* Secondary CTA */}
- <motion.a
- href="/#journeys"
- className="group inline-flex items-center justify-center gap-2 w-full sm:w-64 h-14 rounded-full border border-[var(--color-white-60)] text-[var(--color-white)] hover:border-[var(--color-white)] hover:bg-[var(--color-white-60)]/10 transition-all duration-500"
- style={
- prefersReducedMotion
- ? { opacity: cta2Opacity }
- : { opacity: cta2Opacity, y: cta2Y }
- }
- aria-label="Explore Experiences"
- >
- <span className="font-[family-name:var(--font-ogg)] text-sm tracking-[0.15em] uppercase font-medium">
- Explore Experiences
- </span>
- </motion.a>
- </div>
+    {/* Secondary CTA */}
+    <motion.a
+      href="/#journeys"
+      className="group inline-flex items-center justify-center gap-2 w-[82%] max-w-[250px] sm:w-64 h-11 sm:h-14 rounded-full border border-[var(--color-white-60)] text-[var(--color-white)] hover:border-[var(--color-white)] hover:bg-[var(--color-white-60)]/10 transition-all duration-500"
+      style={
+        prefersReducedMotion
+          ? { opacity: cta2Opacity }
+          : { opacity: cta2Opacity, y: cta2Y }
+      }
+      aria-label="Explore Experiences"
+    >
+      <span className="font-[family-name:var(--font-ogg)] text-xs sm:text-sm tracking-[0.12em] sm:tracking-[0.15em] uppercase font-medium">
+        Explore Experiences
+      </span>
+    </motion.a>
+  </div>
 
  {/* ── Accent: Location Tag ── */}
  <motion.div
