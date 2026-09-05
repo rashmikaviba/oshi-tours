@@ -38,8 +38,9 @@ export default function TeamPolaroids() {
             ease: "power4.out",
             scrollTrigger: {
               trigger: textRef.current,
-              start: "top 85%",
+              start: "top 92%",
               once: true,
+              invalidateOnRefresh: true,
             }
           }
         );
@@ -60,15 +61,28 @@ export default function TeamPolaroids() {
             ease: "expo.out",
             scrollTrigger: {
               trigger: clusterRef.current,
-              start: "top 80%",
+              start: "top 92%",
               once: true,
+              invalidateOnRefresh: true,
             }
           }
         );
       }
     });
 
-    return () => ctx.revert();
+    const safetyTimer = setTimeout(() => {
+      if (textRef.current) {
+        gsap.to(textRef.current.children, { opacity: 1, y: 0, duration: 0.5 });
+      }
+      if (clusterRef.current) {
+        gsap.to(clusterRef.current.children, { opacity: 1, y: 0, scale: 1, duration: 0.5 });
+      }
+    }, 3000);
+
+    return () => {
+      clearTimeout(safetyTimer);
+      ctx.revert();
+    };
   }, [prefersReducedMotion]);
 
   return (

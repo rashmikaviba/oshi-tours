@@ -36,8 +36,9 @@ export default function InspirationSection() {
             ease: "power4.out",
             scrollTrigger: {
               trigger: headerRef.current,
-              start: "top 85%",
+              start: "top 92%",
               once: true,
+              invalidateOnRefresh: true,
             },
           }
         );
@@ -58,15 +59,30 @@ export default function InspirationSection() {
             ease: "expo.out",
             scrollTrigger: {
               trigger: cardsContainerRef.current,
-              start: "top 80%",
+              start: "top 92%",
               once: true,
+              invalidateOnRefresh: true,
             },
           }
         );
       }
     }, sectionRef);
 
-    return () => ctx.revert();
+    // Fallback safety to ensure content is visible if scroll trigger is bypassed on mobile
+    const safetyTimer = setTimeout(() => {
+      if (headerRef.current) {
+        gsap.to(headerRef.current.children, { opacity: 1, y: 0, duration: 0.5 });
+      }
+      if (cardsContainerRef.current) {
+        const cardElements = cardsContainerRef.current.querySelectorAll("[data-journey-card]");
+        gsap.to(cardElements, { opacity: 1, y: 0, scale: 1, duration: 0.5 });
+      }
+    }, 2500);
+
+    return () => {
+      clearTimeout(safetyTimer);
+      ctx.revert();
+    };
   }, [prefersReducedMotion]);
 
   const featureJourney = CURATED_JOURNEYS.find((j) => j.variant === "feature") || CURATED_JOURNEYS[0];
@@ -100,8 +116,8 @@ export default function InspirationSection() {
           </div>
 
           <div className="flex-shrink-0 self-start sm:self-end sm:pb-1 mt-2 sm:mt-0">
-            <PillButton href="/#journeys" ariaLabel="See all curated journeys">
-              See more journeys
+            <PillButton href="/trip-planner" ariaLabel="Plan Your Journey">
+              Plan Your Journey
             </PillButton>
           </div>
         </div>

@@ -15,77 +15,87 @@ import Footer from "@/components/Footer";
 import { experiences } from "@/data/experiences/hill-country-by-rail";
 
 export default function ExperiencePage() {
-  const params = useParams();
-  const slug = (typeof params?.slug === "string" ? params.slug : "hill-country-by-rail");
-  
-  // Lookup experience data, fallback to hill-country-by-rail
-  const experience = experiences[slug] || experiences["hill-country-by-rail"];
-  const isTransportOnly = !experience.itinerary || experience.itinerary.length === 0;
+ const params = useParams();
+ const slug = (typeof params?.slug === "string" ? params.slug : "hill-country-by-rail");
+ 
+ // Lookup experience data, fallback to hill-country-by-rail
+ const experience = experiences[slug] || experiences["hill-country-by-rail"];
+ const isTransportOnly = !experience.itinerary || experience.itinerary.length === 0;
 
-  return (
-    <main className="relative min-h-screen bg-[var(--color-beige)] text-[var(--color-green)] overflow-x-hidden selection:bg-[var(--color-green-40)] selection:text-[var(--color-white)]">
-      {/* ── Fixed Transparent Overlay Navbar ── */}
-      <Navbar isVisible={true} />
+ const isHighlandsTransportPage =
+   slug === "chauffeur-transport-service" ||
+   slug === "highlands-wilds-golden-south-12-days" ||
+   (experience &&
+     (experience.slug === "chauffeur-transport-service" ||
+       experience.slug === "highlands-wilds-golden-south-12-days"));
 
-      {/* ── 1. Cinematic Hero (Includes QuickFacts row at bottom) ── */}
-      <Hero experience={experience} />
+ return (
+ <main className="relative min-h-screen bg-[var(--color-beige)] text-[var(--color-green)] overflow-x-hidden selection:bg-[var(--color-green-40)] selection:text-[var(--color-white)]">
+ {/* ── Fixed Transparent Overlay Navbar ── */}
+ <Navbar isVisible={true} />
 
-      {/* ── Continuous Beige Background Wrapper for Sections 2-6 ── */}
-      <div className="w-full bg-[var(--color-beige)] text-[var(--color-green)]">
-        {/* ── 2. Overview / Details & Facts ── */}
-        <Overview experience={experience} />
+ {/* ── 1. Cinematic Hero (Includes QuickFacts row at bottom) ── */}
+ <Hero experience={experience} />
 
-        {/* ── 3. Timeline vs Transport Only Layout Redesign ── */}
-        {isTransportOnly ? (
-          <TransportServiceDetails />
-        ) : (
-          <ItineraryTimeline experience={experience} />
-        )}
+ {/* ── Continuous Beige Background Wrapper for Sections 2-6 ── */}
+ <div className="w-full bg-[var(--color-beige)] text-[var(--color-green)]">
+ {/* ── 2. Overview / Details & Facts ── */}
+ <Overview experience={experience} />
 
-        {/* ── 4. Editorial Gallery Collage ── */}
-        <Gallery experience={experience} />
+ {/* ── 3. Timeline vs Transport Only Layout Redesign ── */}
+ {isTransportOnly ? (
+ <TransportServiceDetails />
+ ) : (
+ <ItineraryTimeline experience={experience} />
+ )}
 
-        {/* ── 5. Booking Form Section ── */}
-        <section
-          id="booking-form"
-          className="border-t border-[var(--color-green)]/15"
-          aria-label="Booking enquiry section"
-        >
-          <BookingForm experienceName={experience.title} />
-        </section>
+ {/* ── 4. Editorial Gallery Collage ── */}
+ <Gallery experience={experience} />
 
-        {/* ── 6. Closing CTA / Footer Reassurance ── */}
-        <section
-          className="py-20 sm:py-28 px-6 sm:px-10 md:px-16 lg:px-20 border-t border-[var(--color-green)]/15 text-center"
-          aria-label="Closing reassurance"
-        >
-          <div className="max-w-2xl mx-auto">
-            <h3 className="font-[family-name:var(--font-grandslang)] text-2xl sm:text-3xl lg:text-4xl text-[var(--color-green)] mb-4">
-              Every journey is tailored — speak to a specialist.
-            </h3>
-            <p className="font-[family-name:var(--font-ogg)] text-[var(--color-green-70)] text-sm sm:text-base leading-relaxed mb-8">
-              Whether you wish to extend your stay, add a private helicopter transfer across the central mountain range, or combine this route with our southern coast safaris, our private travel designers are at your service.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <PillButton href="/" showArrow={true}>
-                Explore More Journeys
-              </PillButton>
-              <a
-                href={GMAIL_COMPOSE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={handleEmailClick}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[var(--color-green)]/30 text-[var(--color-green)] font-[family-name:var(--font-ogg)] text-sm tracking-wide hover:bg-[var(--color-green)] hover:text-[var(--color-white)] transition-all duration-300 cursor-pointer pointer-events-auto relative z-10"
-              >
-                oshitourslanka@gmail.com
-              </a>
-            </div>
-          </div>
-        </section>
+ {/* ── 5. Booking Form Section ── */}
+ <section
+ id="booking-form"
+ className="border-t border-[var(--color-green)]/15"
+ aria-label="Booking enquiry section"
+ >
+ <BookingForm
+   experienceName={experience.title}
+   hideActivityFields={isHighlandsTransportPage}
+ />
+ </section>
 
-        {/* ── 7. Global Footer ── */}
-        <Footer />
-      </div>
-    </main>
-  );
+ {/* ── 6. Closing CTA / Footer Reassurance ── */}
+ <section
+ className="py-20 sm:py-28 px-6 sm:px-10 md:px-16 lg:px-20 border-t border-[var(--color-green)]/15 text-center"
+ aria-label="Closing reassurance"
+ >
+ <div className="max-w-2xl mx-auto">
+ <h3 className="font-[family-name:var(--font-grandslang)] text-2xl sm:text-3xl lg:text-4xl text-[var(--color-green)] mb-4">
+ Every journey is tailored, speak to a specialist.
+ </h3>
+ <p className="font-[family-name:var(--font-ogg)] text-[var(--color-green-70)] text-sm sm:text-base leading-relaxed mb-8">
+ Whether you wish to extend your stay, add a private helicopter transfer across the central mountain range, or combine this route with our southern coast safaris, our private travel designers are at your service.
+ </p>
+ <div className="flex flex-wrap items-center justify-center gap-4">
+ <PillButton href="/" showArrow={true}>
+ Explore More Journeys
+ </PillButton>
+ <a
+ href={GMAIL_COMPOSE_URL}
+ target="_blank"
+ rel="noopener noreferrer"
+ onClick={handleEmailClick}
+ className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[var(--color-green)]/30 text-[var(--color-green)] font-[family-name:var(--font-ogg)] text-sm tracking-wide hover:bg-[var(--color-green)] hover:text-[var(--color-white)] transition-all duration-300 cursor-pointer pointer-events-auto relative z-10"
+ >
+ oshitourslanka@gmail.com
+ </a>
+ </div>
+ </div>
+ </section>
+
+ {/* ── 7. Global Footer ── */}
+ <Footer />
+ </div>
+ </main>
+ );
 }

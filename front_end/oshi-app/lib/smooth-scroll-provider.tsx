@@ -42,6 +42,17 @@ export default function SmoothScrollProvider({ children }: SmoothScrollProviderP
     // Sync Lenis → GSAP ScrollTrigger
     lenisInstance.on("scroll", ScrollTrigger.update);
 
+    // Sync native window events for mobile touch devices
+    const handleNativeScroll = () => {
+      ScrollTrigger.update();
+    };
+    const handleResize = () => {
+      ScrollTrigger.refresh();
+    };
+
+    window.addEventListener("scroll", handleNativeScroll, { passive: true });
+    window.addEventListener("resize", handleResize, { passive: true });
+
     // Sync GSAP ticker → Lenis
     const tickerCallback = (time: number) => {
       lenisInstance.raf(time * 1000);
@@ -50,6 +61,8 @@ export default function SmoothScrollProvider({ children }: SmoothScrollProviderP
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      window.removeEventListener("scroll", handleNativeScroll);
+      window.removeEventListener("resize", handleResize);
       gsap.ticker.remove(tickerCallback);
       lenisInstance.destroy();
       lenisRef.current = null;

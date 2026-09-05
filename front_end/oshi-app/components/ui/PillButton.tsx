@@ -25,9 +25,9 @@ export default function PillButton({
 
   const baseClasses = `
     group relative inline-flex items-center justify-center gap-3
-    px-6 py-3 sm:px-7 sm:py-3.5 rounded-full
+    px-5 py-2.5 sm:px-7 sm:py-3.5 rounded-full
     border border-[var(--color-green)] text-[var(--color-green)]
-    font-[family-name:var(--font-ogg)] text-sm sm:text-base tracking-wide
+    font-[family-name:var(--font-ogg)] text-xs sm:text-base tracking-wide
     transition-colors duration-500 ease-[var(--ease-expo-out)]
     hover:text-[var(--color-white)]
     focus-visible:outline-2 focus-visible:outline-[var(--color-green)] focus-visible:outline-offset-4

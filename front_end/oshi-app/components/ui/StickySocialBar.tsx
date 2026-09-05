@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import { Mail } from "lucide-react";
+import { Mail, MessageCircle, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { handleEmailClick, GMAIL_COMPOSE_URL } from "@/lib/emailHelper";
 
 const FacebookIcon = ({ className }: { className?: string }) => (
@@ -49,6 +50,8 @@ const TripAdvisorIcon = ({ className }: { className?: string }) => (
 );
 
 export default function StickySocialBar() {
+  const [isOpen, setIsOpen] = useState(false);
+
   const socialLinks = [
     {
       name: "TripAdvisor",
@@ -81,7 +84,8 @@ export default function StickySocialBar() {
       className="fixed left-3 sm:left-6 top-[65%] sm:top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-3 pointer-events-auto"
       aria-label="Social media links"
     >
-      <div className="flex flex-col items-center gap-2.5 p-2 rounded-full bg-[var(--color-green)] text-[var(--color-beige)] border border-[var(--color-beige)]/20 shadow-2xl backdrop-blur-md">
+      {/* ── Desktop View (Always visible on sm and larger) ── */}
+      <div className="hidden sm:flex flex-col items-center gap-2.5 p-2 rounded-full bg-[var(--color-green)] text-[var(--color-beige)] border border-[var(--color-beige)]/20 shadow-2xl backdrop-blur-md">
         {socialLinks.map((item, index) => {
           const Icon = item.icon;
           return (
@@ -92,12 +96,61 @@ export default function StickySocialBar() {
               rel="noopener noreferrer"
               onClick={item.name === "Email" ? handleEmailClick : undefined}
               aria-label={item.ariaLabel}
-              className="group relative w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-[var(--color-beige)]/80 hover:text-white hover:bg-white/20 hover:scale-110 transition-all duration-300 ease-[var(--ease-expo-out)] cursor-pointer"
+              className="group relative w-10 h-10 rounded-full flex items-center justify-center text-[var(--color-beige)]/80 hover:text-white hover:bg-white/20 hover:scale-110 transition-all duration-300 ease-[var(--ease-expo-out)] cursor-pointer"
             >
-              <Icon className="w-4 h-4 sm:w-4.5 sm:h-4.5 group-hover:scale-125 transition-transform duration-300 ease-[var(--ease-expo-out)]" />
+              <Icon className="w-4.5 h-4.5 group-hover:scale-125 transition-transform duration-300 ease-[var(--ease-expo-out)]" />
             </a>
           );
         })}
+      </div>
+
+      {/* ── Mobile View (Minimized by default, expands on click) ── */}
+      <div className="flex sm:hidden flex-col items-center gap-1.5">
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, y: 8 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 8 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col items-center gap-2 p-1.5 rounded-full bg-[var(--color-green)] text-[var(--color-beige)] border border-[var(--color-beige)]/20 shadow-xl backdrop-blur-md"
+            >
+              {socialLinks.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <a
+                    key={index}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      if (item.name === "Email") handleEmailClick(e);
+                      setIsOpen(false);
+                    }}
+                    aria-label={item.ariaLabel}
+                    className="group relative w-8 h-8 rounded-full flex items-center justify-center text-[var(--color-beige)]/90 hover:text-white hover:bg-white/20 active:scale-95 transition-all duration-300 cursor-pointer"
+                  >
+                    <Icon className="w-3.5 h-3.5" />
+                  </a>
+                );
+              })}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Mobile Trigger Button */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label={isOpen ? "Close social menu" : "Open social menu"}
+          aria-expanded={isOpen}
+          className="w-8.5 h-8.5 rounded-full bg-[var(--color-green)] text-[var(--color-beige)] border border-[var(--color-beige)]/20 shadow-xl backdrop-blur-md flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+        >
+          {isOpen ? (
+            <X className="w-4 h-4 transition-transform duration-300" />
+          ) : (
+            <MessageCircle className="w-4 h-4 transition-transform duration-300" />
+          )}
+        </button>
       </div>
     </aside>
   );
