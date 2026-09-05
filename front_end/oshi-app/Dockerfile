@@ -1,47 +1,56 @@
-# ==============================================================================
-# BUILD STAGE: Installs dependencies and builds Next.js production bundle
-# ==============================================================================
+# Dependencies
+FROM node:20-alpine AS dependencies
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm ci
+
+
+# Production build
 FROM node:20-alpine AS build
 
 WORKDIR /app
 
-# Copy package lock and package json
-COPY package*.json ./
-
-# Install dependencies using clean install for reproducibility
-RUN npm install
-
-# Copy the rest of the application files
+COPY --from=dependencies /app/node_modules ./node_modules
 COPY . .
 
-# Declare build arguments for environment variables
 ARG NEXT_PUBLIC_API_URL
 ARG NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 ARG NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
 
-# Expose them as environment variables during build time
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 ENV NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=$NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Build the production bundle
 RUN npm run build
 
-# ==============================================================================
-# PRODUCTION STAGE: Nginx web server for high performance and static serving
-# ==============================================================================
-FROM nginx:stable-alpine AS production
 
-# Copy built static files and assets from build stage to Nginx web root
-COPY --from=build /app/public /usr/share/nginx/html
-COPY --from=build /app/.next /usr/share/nginx/html/.next
+# Production runtime
+FROM node:20-alpine AS production
 
-# Copy custom Nginx config for client-side routing fallback and caching
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+WORKDIR /app
 
-# Expose HTTP port 80
-EXPOSE 80
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
 
-# Start Nginx server
-CMD ["nginx", "-g", "daemon off;"]
+RUN addgroup --system --gid 1001 nodejs \
+    && adduser --system --uid 1001 nextjs
+
+COPY --from=build /app/public ./public
+
+RUN mkdir .next \
+    && chown nextjs:nodejs .next
+
+COPY --from=build --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=build --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]
