@@ -16,10 +16,17 @@ connectToDatabase().catch((err) => {
   console.warn('[Server Startup] Initial database connection attempt failed:', err.message);
 });
 
-// Middleware
+// Middleware 
+const allowedOrigins = (
+  process.env.FRONTEND_ORIGIN || 'http://localhost:3000'
+)
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_ORIGIN || 'http://localhost:3000',
+    origin: allowedOrigins,
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
     methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
