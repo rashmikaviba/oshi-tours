@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Globe, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 const UKFlag = () => (
   <svg className="w-5 h-3.5 rounded-xs overflow-hidden shrink-0 border border-white/30 shadow-xs" viewBox="0 0 60 30" aria-hidden="true">
@@ -74,16 +74,78 @@ declare global {
   }
 }
 
+const STORAGE_KEY = "oshi_user_lang";
+
+const clearGoogleTranslateCookies = () => {
+  if (typeof document === "undefined") return;
+  const domainParts = window.location.hostname.split(".");
+  const domains = ["", window.location.hostname, "." + window.location.hostname];
+
+  if (domainParts.length > 2) {
+    const parentDomain = "." + domainParts.slice(-2).join(".");
+    domains.push(parentDomain);
+  }
+
+  const paths = ["/", "", window.location.pathname];
+
+  domains.forEach((domain) => {
+    paths.forEach((path) => {
+      const domainStr = domain ? `; domain=${domain}` : "";
+      const pathStr = path ? `; path=${path}` : "; path=/";
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC${domainStr}${pathStr}`;
+    });
+  });
+};
+
+const setGoogleTranslateCookie = (langCode: string) => {
+  if (typeof document === "undefined") return;
+  clearGoogleTranslateCookies();
+
+  if (langCode === "en") {
+    document.cookie = `googtrans=/en/en; path=/`;
+    document.cookie = `googtrans=/en/en; path=/; domain=${window.location.hostname}`;
+  } else {
+    document.cookie = `googtrans=/en/${langCode}; path=/`;
+    document.cookie = `googtrans=/en/${langCode}; path=/; domain=${window.location.hostname}`;
+    document.cookie = `googtrans=/auto/${langCode}; path=/`;
+  }
+};
+
+const getInitialLanguage = (): string => {
+  if (typeof window === "undefined") return "en";
+
+  // Check saved user choice in localStorage first
+  const savedLang = localStorage.getItem(STORAGE_KEY);
+  if (savedLang && LANGUAGES.some((l) => l.code === savedLang)) {
+    return savedLang;
+  }
+
+  // Fallback to cookie check with broad matching for /en/xx, /auto/xx, or /xx
+  const match = document.cookie.match(/(?:^|; )googtrans=(?:\/(?:en|auto))?\/([a-z]{2})/i);
+  if (match && match[1]) {
+    const code = match[1].toLowerCase();
+    if (LANGUAGES.some((l) => l.code === code)) {
+      return code;
+    }
+  }
+
+  return "en";
+};
+
 export default function LanguageSelector() {
   const [currentLang, setCurrentLang] = useState<string>("en");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Read saved language from cookie on mount & initialize Google Translate script
   useEffect(() => {
-    const match = document.cookie.match(/(?:^|; )googtrans=\/en\/([a-z]{2})/);
-    if (match && match[1]) {
-      setCurrentLang(match[1]);
+    const lang = getInitialLanguage();
+    setCurrentLang(lang);
+
+    // Sync cookies with stored preference
+    if (lang === "en") {
+      clearGoogleTranslateCookies();
+    } else {
+      setGoogleTranslateCookie(lang);
     }
 
     // Define global callback if not present
@@ -124,18 +186,25 @@ export default function LanguageSelector() {
     setCurrentLang(langCode);
     setIsOpen(false);
 
-    // Set cookie for Google Translate
-    document.cookie = `googtrans=/en/${langCode}; path=/`;
-    document.cookie = `googtrans=/en/${langCode}; path=/; domain=${window.location.hostname}`;
+    // Persist user selection
+    localStorage.setItem(STORAGE_KEY, langCode);
+
+    // Set or clear cookies
+    if (langCode === "en") {
+      clearGoogleTranslateCookies();
+    } else {
+      setGoogleTranslateCookie(langCode);
+    }
 
     // Update select element inside Google Translate widget
     const selectElem = document.querySelector(".goog-te-combo") as HTMLSelectElement;
     if (selectElem) {
-      selectElem.value = langCode;
+      selectElem.value = langCode === "en" ? "" : langCode;
       selectElem.dispatchEvent(new Event("change"));
-    } else {
-      window.location.reload();
     }
+
+    // Reload page to apply clean translation state without leftover French nodes
+    window.location.reload();
   };
 
   const activeLangObj = LANGUAGES.find((l) => l.code === currentLang) || LANGUAGES[0];
