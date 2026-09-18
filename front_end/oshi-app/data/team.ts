@@ -25,14 +25,14 @@ export const team: TeamMember[] = [
     id: "village-immersion",
     name: "Culture",
     role: "AUTHENTIC VILLAGE LAGOONS",
-    photo: "/media/p_3.jpg",
+    photo: "/media/p_6.jpg",
     signature: "Culture",
   },
   {
     id: "highland-waterways",
     name: "Highlands",
     role: "PRIVATE SCENIC WATERWAYS",
-    photo: "/media/p_4.jpg",
+    photo: "/media/p_7.jpg",
     signature: "Highlands",
   },
   {
